@@ -5,7 +5,8 @@ import Features from './components/Features'
 import Security from './components/Security'
 import Footer from './components/Footer'
 import FeatureDetails from './pages/FeatureDetails'
-import Contact from './pages/Contact' // 👈 追加
+import Contact from './pages/Contact'
+import Terms from './components/Terms'
 
 const Home = () => (
   <>
@@ -27,7 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/features" element={<FeatureDetails />} />
-          <Route path="/contact" element={<Contact />} /> {/* 👈 追加 */}
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
         <Footer />
       </div>

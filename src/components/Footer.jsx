@@ -19,9 +19,9 @@ const Footer = () => {
         </div>
 
         <div className="flex gap-6 text-sm text-zinc-500">
-          <a href="#" className="transition-colors hover:text-white">
+          <Link to="/terms" className="transition-colors hover:text-white">
             利用規約
-          </a>
+          </Link>
           <a
             target="_blank"
             href="https://well-danger-b16.notion.site/LimitBox-349f48eee894804bb774ed7fb156d886"

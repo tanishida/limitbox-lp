@@ -7,8 +7,8 @@ const Hero = () => {
   const [typedLine1, setTypedLine1] = useState('')
   const [typedLine2, setTypedLine2] = useState('')
 
-  const fullLine1 = '絶対にバレない。'
-  const fullLine2 = '時間で消える極秘ファイル管理。'
+  const fullLine1 = '絶対にバレない'
+  const fullLine2 = '時間が経つと自動で消える極秘ファイル管理'
 
   useEffect(() => {
     let currentLine1 = ''
@@ -102,21 +102,32 @@ const Hero = () => {
       </div>
 
       <div className="perspective-1000 relative mx-auto mt-20 w-full max-w-5xl">
-        <div className="group relative flex h-auto w-full items-end justify-center overflow-hidden rounded-t-3xl border-x border-t border-blue-500/30 bg-gradient-to-t from-zinc-900 to-zinc-800 shadow-[0_-20px_50px_rgba(59,130,246,0.1)]">
+        {/* 👇 divをLinkに変更し、to="/features" と cursor-pointer を追加 */}
+        <Link
+          to="/features"
+          className="group relative block flex h-auto w-full cursor-pointer items-end justify-center overflow-hidden rounded-t-3xl border-x border-t border-blue-500/30 bg-gradient-to-t from-zinc-900 to-zinc-800 shadow-[0_-20px_50px_rgba(59,130,246,0.1)]"
+        >
+          {/* 👇 追加演出：ホバー時に浮かび上がるハッカー風ガイド */}
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-blue-900/0 transition-all duration-500 group-hover:bg-blue-900/20">
+            <span className="translate-y-4 rounded-full border border-white/20 bg-black/60 px-6 py-3 font-mono text-sm tracking-widest text-white opacity-0 drop-shadow-md backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+              [ ACCESS OPERATION DEMO ]
+            </span>
+          </div>
+
           {/* メインのスクリーンショット (MacまたはiPad) */}
           <img
             src="/images/screenshot-mac.png" // または screenshot-ipad.png
             alt="LimitBox on Mac"
-            className="h-auto w-full rounded-t-2xl object-cover transition-transform duration-700 group-hover:scale-105"
+            className="relative z-10 h-auto w-full rounded-t-2xl object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
           {/* 重ねる用のiPhoneスクリーンショット (オプション: 浮遊感の演出) */}
           <img
             src="/images/screenshot-iphone.png"
             alt="LimitBox on iPhone"
-            className="absolute right-10 bottom-0 h-auto w-1/4 translate-y-10 object-contain drop-shadow-2xl transition-transform delay-100 duration-700 group-hover:-translate-y-4"
+            className="absolute relative right-10 bottom-0 z-10 h-auto w-1/4 translate-y-10 object-contain drop-shadow-2xl transition-transform delay-100 duration-700 group-hover:-translate-y-4"
           />
-        </div>
+        </Link>
       </div>
     </section>
   )
