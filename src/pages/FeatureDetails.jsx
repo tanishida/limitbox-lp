@@ -195,7 +195,7 @@ const FeatureDetails = () => {
         {/* 🔴 YouTube詳細解説へのリンク */}
         <section className="mx-auto mb-24 max-w-4xl">
           <a
-            href="https://youtube.com" // ※後で実際の動画URLに変更してください
+            href="https://youtu.be/gGAq5orqH2E"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/40 p-6 transition-all duration-500 hover:border-red-500/50 hover:bg-zinc-900/80 hover:shadow-[0_0_40px_rgba(239,68,68,0.15)] md:flex-row md:p-8"
