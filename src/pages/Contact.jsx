@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Mail, ExternalLink, MessageSquare } from 'lucide-react'
+import { useTranslation } from 'react-i18next' // 追加
 
 const Contact = () => {
+  const { t } = useTranslation() // 追加
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -16,15 +19,17 @@ const Contact = () => {
         className="mb-10 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
-        戻る
+        {t('contact.back')}
       </Link>
 
       <div className="mb-16 text-center">
-        <h1 className="mb-6 text-4xl font-bold md:text-5xl">Contact</h1>
+        <h1 className="mb-6 text-4xl font-bold md:text-5xl">
+          {t('contact.title')}
+        </h1>
         <p className="text-lg text-zinc-400">
-          製品に関するご質問や、不具合の報告、
+          {t('contact.desc1')}
           <br className="hidden md:block" />
-          機能追加のリクエストなどお気軽にお寄せください。
+          {t('contact.desc2')}
         </p>
       </div>
 
@@ -38,7 +43,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="mb-1 text-sm text-zinc-500">
-                  メールでお問い合わせ
+                  {t('contact.emailLabel')}
                 </p>
                 <p className="font-mono text-xl font-medium">{email}</p>
               </div>
@@ -48,7 +53,7 @@ const Contact = () => {
               href={`mailto:${email}`}
               className="flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-zinc-950 transition-transform hover:scale-105"
             >
-              メールを送る
+              {t('contact.sendEmail')}
               <ExternalLink className="h-4 w-4" />
             </a>
           </div>
@@ -59,10 +64,10 @@ const Contact = () => {
           <div className="flex gap-4">
             <MessageSquare className="h-6 w-6 shrink-0 text-blue-400" />
             <div className="text-sm leading-relaxed text-zinc-400">
-              <p className="mb-2 font-bold text-zinc-200">サポートについて</p>
-              <p>
-                通常、3営業日以内に返信を差し上げるよう努めております。不具合報告の際は、ご使用のデバイス（iPhone/iPad/Mac）とOSのバージョンを併記いただけますとスムーズです。
+              <p className="mb-2 font-bold text-zinc-200">
+                {t('contact.supportTitle')}
               </p>
+              <p>{t('contact.supportDesc')}</p>
             </div>
           </div>
         </div>

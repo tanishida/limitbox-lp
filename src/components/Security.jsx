@@ -1,7 +1,10 @@
 import React from 'react'
 import { Lock } from 'lucide-react'
+import { useTranslation } from 'react-i18next' // 追加
 
 const Security = () => {
+  const { t } = useTranslation() // 追加
+
   return (
     <section className="bg-zinc-900/30 px-6 py-24">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 md:flex-row md:p-16">
@@ -11,12 +14,12 @@ const Security = () => {
 
         <div>
           <h2 className="mb-4 text-2xl font-bold md:text-4xl">
-            完全なオフライン設計
+            {t('security.title')}
           </h2>
           <p className="leading-relaxed text-zinc-400">
-            LimitBoxに保存されたファイルは、すべてあなたのデバイス内でのみ強力に暗号化されて保存されます。
+            {t('security.desc1')}
             <br className="hidden md:block" />
-            外部サーバーへのアップロードや通信は一切行わないため、開発者ですらあなたのデータを見ることは物理的に不可能です。
+            {t('security.desc2')}
           </p>
         </div>
       </div>
