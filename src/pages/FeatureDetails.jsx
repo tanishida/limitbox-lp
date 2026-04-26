@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next' // 追加
 import {
   ArrowLeft,
   Timer,
   ShieldAlert,
   MonitorSmartphone,
-  PlayCircle,
   PlaySquare,
   ExternalLink,
 } from 'lucide-react'
 
 const FeatureDetails = () => {
+  const { t } = useTranslation() // 追加
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -22,22 +24,20 @@ const FeatureDetails = () => {
         className="mb-10 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
-        トップページに戻る
+        {t('featureDetails.back')}
       </Link>
 
       <div className="mb-16">
         <h1 className="mb-6 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
-          Operation: LimitBox
+          {t('featureDetails.title')}
         </h1>
         <p className="font-mono text-sm tracking-widest text-zinc-400 uppercase">
-          {'>'} Functional Verification / Version 1.1.0
+          {t('featureDetails.subtitle')}
         </p>
       </div>
 
       {/* 📽️ 操作デモ動画セクション */}
       <section className="group relative mx-auto mb-24 max-w-4xl">
-        {' '}
-        {/* max-wを追加して動画が大きくなりすぎないように調整 */}
         <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-indigo-600 opacity-25 blur transition duration-1000 group-hover:opacity-50"></div>
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-zinc-950 shadow-2xl">
           {/* スパイ映画風：動画上部のステータスバー */}
@@ -53,23 +53,19 @@ const FeatureDetails = () => {
             </div>
           </div>
 
-          {/* 👇 ビデオ本体 (修正ポイント) */}
           <div className="relative bg-black p-2 md:p-4">
-            {/* p-2 md:p-4 を追加して、外枠との間に少し余白を作る */}
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="h-auto w-full rounded-2xl object-contain opacity-95" // object-cover から object-contain に変更
+              className="h-auto w-full rounded-2xl object-contain opacity-95"
             >
               <source src="/videos/operation-demo.mov" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            {/* スパイ映画風：オーバーレイ（走査線やグリッド） */}
             <div className="bg-crt-lines pointer-events-none absolute inset-0 opacity-20"></div>
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)]"></div>
-            {/* 角のレティクル（照準）デザイン */}
             <div className="absolute top-4 left-4 h-4 w-4 border-t-2 border-l-2 border-blue-500/50"></div>
             <div className="absolute top-4 right-4 h-4 w-4 border-t-2 border-r-2 border-blue-500/50"></div>
             <div className="absolute bottom-4 left-4 h-4 w-4 border-b-2 border-l-2 border-blue-500/50"></div>
@@ -77,7 +73,7 @@ const FeatureDetails = () => {
           </div>
         </div>
         <p className="mt-4 text-center font-mono text-xs text-zinc-500">
-          ※ 実際の開発環境（Designed for iPad on Mac）でのシームレスな操作デモ
+          {t('featureDetails.videoNote')}
         </p>
       </section>
 
@@ -91,10 +87,12 @@ const FeatureDetails = () => {
                   <div className="absolute inset-0 animate-pulse rounded-2xl bg-red-500/10 blur-lg" />
                   <Timer className="relative z-10 h-8 w-8 text-red-500" />
                 </div>
-                <h2 className="text-2xl font-bold md:text-3xl">自爆タイマー</h2>
+                <h2 className="text-2xl font-bold md:text-3xl">
+                  {t('featureDetails.timer.title')}
+                </h2>
               </div>
               <p className="mb-8 text-lg leading-relaxed text-zinc-300">
-                設定した期間（10分〜1ヶ月）アプリにアクセスがなかった場合、内部のすべての極秘データとフォルダ設定を跡形もなく完全消去します。もしあなたに何かがあってスマホを見られても、秘密が漏れることは絶対にありません。
+                {t('featureDetails.timer.desc')}
               </p>
 
               <div className="group relative rounded-xl border border-red-500/20 bg-black/50 p-6 font-mono text-sm text-red-400">
@@ -103,8 +101,8 @@ const FeatureDetails = () => {
                   <div className="h-3 w-3 rounded-full bg-zinc-700" />
                   <div className="h-3 w-3 rounded-full bg-zinc-700" />
                 </div>
-                <span className="mr-2 text-zinc-600">{'>'}</span> //
-                時間経過で暗号化キーを完全に破棄
+                <span className="mr-2 text-zinc-600">{'>'}</span> //{' '}
+                {t('featureDetails.timer.code1')}
                 <br />
                 <span className="mr-2 text-zinc-600">{'>'}</span>{' '}
                 KeyManager.destroyKey()
@@ -119,7 +117,6 @@ const FeatureDetails = () => {
 
             <div className="group relative mx-auto flex w-full max-w-[280px] flex-1 items-center justify-center md:max-w-[320px]">
               <div className="pointer-events-none absolute inset-0 rounded-full bg-red-600/10 blur-[80px] transition-colors duration-500 group-hover:bg-red-600/20" />
-
               <div className="relative z-10 overflow-hidden rounded-[2.5rem] border-4 border-zinc-700/50 bg-zinc-950 shadow-2xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-red-500/30 group-hover:shadow-[0_20px_50px_rgba(239,68,68,0.2)]">
                 <img
                   src="/images/screenshot-timer-setup.png"
@@ -141,15 +138,13 @@ const FeatureDetails = () => {
                   <ShieldAlert className="h-8 w-8 text-orange-500" />
                 </div>
                 <h2 className="text-2xl font-bold md:text-3xl">
-                  偽装とFace IDロック
+                  {t('featureDetails.decoy.title')}
                 </h2>
               </div>
               <p className="mb-6 text-lg leading-relaxed text-zinc-300">
-                アプリの起動にはFace
-                IDによる生体認証が必須です。さらに、認証に3回失敗するとパスコード入力画面に切り替わりますが、正しいパスコードを知らない人間には中のデータを見ることはできません。
+                {t('featureDetails.decoy.desc')}
               </p>
             </div>
-            {/* 👇 ここに将来的にFaceIDの画面スクショなどを入れる想定のダミー枠 */}
             <div className="mx-auto flex w-full max-w-[280px] flex-1 items-center justify-center md:max-w-[320px]">
               <div className="relative z-10 overflow-hidden rounded-[2.5rem] border-4 border-zinc-700/50 bg-zinc-950 shadow-2xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-red-500/30 group-hover:shadow-[0_20px_50px_rgba(239,68,68,0.2)]">
                 <img
@@ -173,11 +168,11 @@ const FeatureDetails = () => {
                   <MonitorSmartphone className="relative z-10 h-8 w-8 text-blue-500" />
                 </div>
                 <h2 className="text-2xl font-bold md:text-3xl">
-                  Mac / iPad 完全最適化 UI
+                  {t('featureDetails.multi.title')}
                 </h2>
               </div>
               <p className="mb-6 text-lg leading-relaxed text-zinc-300">
-                v1.1.0より、iPhone版のカスタムUIをMacおよびiPadでもシームレスに利用可能になりました。大画面でも操作性を損なわず、スワイプでサクサクと動画や画像を閲覧できます。
+                {t('featureDetails.multi.desc')}
               </p>
             </div>
 
@@ -200,40 +195,34 @@ const FeatureDetails = () => {
             rel="noopener noreferrer"
             className="group relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/40 p-6 transition-all duration-500 hover:border-red-500/50 hover:bg-zinc-900/80 hover:shadow-[0_0_40px_rgba(239,68,68,0.15)] md:flex-row md:p-8"
           >
-            {/* 背景のうっすらとした赤いグラデーション（ホバー時に強調） */}
             <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/0 to-red-500/0 transition-all duration-500 group-hover:from-red-500/5"></div>
 
             <div className="relative z-10 flex w-full items-center gap-6 md:w-auto">
-              {/* 👇 Youtubeの代わりに PlaySquare を使用 */}
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/10 transition-transform duration-500 group-hover:scale-110">
                 <PlaySquare className="h-8 w-8 text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
               </div>
-
-              {/* テキスト部分 */}
               <div className="flex-1">
                 <div className="mb-1 flex items-center gap-3">
                   <h3 className="text-xl font-bold text-white transition-colors group-hover:text-red-100 md:text-2xl">
-                    詳細オペレーションマニュアル
+                    {t('featureDetails.youtube.title')}
                   </h3>
                   <span className="rounded border border-red-500/30 bg-red-500/10 px-2 py-0.5 font-mono text-[10px] text-red-400">
                     YOUTUBE
                   </span>
                 </div>
                 <p className="text-sm text-zinc-400 md:text-base">
-                  初期設定から自爆タイマーの完全な動作検証まで、LimitBoxの全貌を解説した極秘ブリーフィング映像。
+                  {t('featureDetails.youtube.desc')}
                 </p>
               </div>
             </div>
 
-            {/* 右側のボタン部分 */}
             <div className="relative z-10 w-full shrink-0 md:w-auto">
               <div className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 font-mono text-sm text-white transition-all duration-300 group-hover:border-red-500 group-hover:bg-red-600 group-hover:text-white">
                 [ INITIATE_LINK ]
                 <ExternalLink className="h-4 w-4" />
               </div>
-              {/* 動画準備中用のステータス */}
               <p className="mt-2 text-center font-mono text-[10px] text-zinc-500 transition-colors group-hover:text-red-400/70">
-                STATUS: AWAITING UPLOAD...
+                STATUS: ENCRYPTED VIDEO ONLINE
               </p>
             </div>
           </a>

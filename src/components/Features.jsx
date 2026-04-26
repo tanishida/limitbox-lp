@@ -1,5 +1,6 @@
 import React from 'react'
 import { Timer, MonitorSmartphone, ShieldAlert } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <div className="rounded-3xl border border-white/5 bg-zinc-900/50 p-8 transition-colors hover:bg-zinc-900">
@@ -12,33 +13,32 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 )
 
 const Features = () => {
+  const { t } = useTranslation()
   return (
     <section className="border-t border-white/5 bg-zinc-950 px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            秘密を守る、3つの鉄壁
+            {t('features.title1')}
           </h2>
-          <p className="text-zinc-400">
-            LimitBoxはただのファイル保存アプリではありません。
-          </p>
+          <p className="text-zinc-400">{t('features.title2')}</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           <FeatureCard
             icon={Timer}
-            title="完全自爆タイマー"
-            description="設定した期間アプリを開かなかった場合、保存されている全てのデータを跡形もなく自動消去。万が一デバイスを紛失しても安心です。"
+            title={t('features.timer')}
+            description={t('features.timerDesc')}
           />
           <FeatureCard
             icon={MonitorSmartphone}
-            title="全デバイス対応の美しさ"
-            description="iPhoneはもちろん、iPadの大画面やMacにもネイティブ対応。デバイスに合わせて最適化された専用の動画プレイヤーで快適に閲覧できます。"
+            title={t('features.MonitorSmartphone')}
+            description={t('features.MonitorSmartphoneDesc')}
           />
           <FeatureCard
             icon={ShieldAlert}
-            title="偽装と強制ロック"
-            description="Face IDによる強固なロックに加え、パスコードを一定回数間違えると偽装画面へ遷移。あなたの本当の秘密には誰もたどり着けません。"
+            title={t('features.shieldAlert')}
+            description={t('features.shieldAlertDesc')}
           />
         </div>
       </div>
