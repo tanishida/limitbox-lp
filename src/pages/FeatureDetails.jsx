@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next' // 追加
+import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft,
   Timer,
@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 
 const FeatureDetails = () => {
-  const { t } = useTranslation() // 追加
+  const { t } = useTranslation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -145,8 +145,10 @@ const FeatureDetails = () => {
                 {t('featureDetails.decoy.desc')}
               </p>
             </div>
-            <div className="mx-auto flex w-full max-w-[280px] flex-1 items-center justify-center md:max-w-[320px]">
-              <div className="relative z-10 overflow-hidden rounded-[2.5rem] border-4 border-zinc-700/50 bg-zinc-950 shadow-2xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-red-500/30 group-hover:shadow-[0_20px_50px_rgba(239,68,68,0.2)]">
+
+            <div className="group relative mx-auto flex w-full max-w-[280px] flex-1 items-center justify-center md:max-w-[320px]">
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-orange-600/10 blur-[80px] transition-colors duration-500 group-hover:bg-orange-600/20" />
+              <div className="relative z-10 overflow-hidden rounded-[2.5rem] border-4 border-zinc-700/50 bg-zinc-950 shadow-2xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-orange-500/30 group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.2)]">
                 <img
                   src="/images/screenshot-lock.png"
                   alt="偽装とFace IDロック"
