@@ -119,6 +119,8 @@ const resources = {
         supportTitle: 'サポートについて',
         supportDesc:
           '通常、3営業日以内に返信を差し上げるよう努めております。不具合報告の際は、ご使用のデバイス（iPhone/iPad/Mac）とOSのバージョンを併記いただけますとスムーズです。',
+        xLabel: 'X (Twitter) でお問い合わせ',
+        sendX: 'DMを送る',
       },
       featureDetails: {
         back: 'トップページに戻る',
@@ -269,6 +271,8 @@ const resources = {
         supportTitle: 'About Support',
         supportDesc:
           'We typically aim to reply within 3 business days. For bug reports, please include your device model (iPhone/iPad/Mac) and OS version for a smoother resolution.',
+        xLabel: 'Inquire via X (Twitter)',
+        sendX: 'Send DM',
       },
       featureDetails: {
         back: 'Back to Home',
