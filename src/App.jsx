@@ -10,12 +10,16 @@ import Terms from './components/Terms'
 import './i18n'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import LanguageInit from './components/LanguageInit'
+import DownloadCTA from './components/DownloadCTA'
 
 const Home = () => (
   <>
     <Hero />
     <Features />
     <Security />
+    <div className="mt-16 border-t border-white/10 pt-16">
+      <DownloadCTA />
+    </div>
   </>
 )
 

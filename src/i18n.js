@@ -87,6 +87,10 @@ const resources = {
         supplement: '附則',
         date: '2026年4月26日 制定',
       },
+      cta: {
+        title: 'あなたの秘密を、今すぐロック。',
+        subtitle: 'STATUS: READY FOR DEPLOYMENT. (完全無料)',
+      },
       features: {
         title1: '秘密を守る、3つの鉄壁',
         title2: 'LimitBoxはただのファイル保存アプリではありません。',
@@ -232,6 +236,10 @@ const resources = {
         },
         supplement: 'Supplementary Provision',
         date: 'Enacted on April 26, 2026',
+      },
+      cta: {
+        title: 'Lock your secrets down today.',
+        subtitle: 'STATUS: READY FOR DEPLOYMENT. (100% Free)',
       },
       features: {
         title1: '3 Layers of Protection',

@@ -9,6 +9,7 @@ import {
   PlaySquare,
   ExternalLink,
 } from 'lucide-react'
+import DownloadCTA from '../components/DownloadCTA'
 
 const FeatureDetails = () => {
   const { t } = useTranslation()
@@ -229,6 +230,9 @@ const FeatureDetails = () => {
             </div>
           </a>
         </section>
+      </div>
+      <div className="mt-16 border-t border-white/10 pt-16">
+        <DownloadCTA />
       </div>
     </div>
   )
