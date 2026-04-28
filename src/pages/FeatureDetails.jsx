@@ -95,24 +95,32 @@ const FeatureDetails = () => {
               <p className="mb-8 text-lg leading-relaxed text-zinc-300">
                 {t('featureDetails.timer.desc')}
               </p>
-
-              <div className="group relative rounded-xl border border-red-500/20 bg-black/50 p-6 font-mono text-sm text-red-400">
-                <div className="absolute top-2 right-2 flex gap-1.5">
+              <div className="group relative w-full overflow-hidden rounded-xl border border-red-500/20 bg-black/50 font-mono text-[11px] text-red-400 sm:text-xs md:text-sm">
+                <div className="absolute top-3 right-3 z-10 flex gap-1.5 bg-black/50 pl-2 md:top-4 md:right-4">
                   <div className="h-3 w-3 rounded-full bg-red-500/30 transition-colors group-hover:bg-red-500" />
                   <div className="h-3 w-3 rounded-full bg-zinc-700" />
                   <div className="h-3 w-3 rounded-full bg-zinc-700" />
                 </div>
-                <span className="mr-2 text-zinc-600">{'>'}</span> //{' '}
-                {t('featureDetails.timer.code1')}
-                <br />
-                <span className="mr-2 text-zinc-600">{'>'}</span>{' '}
-                KeyManager.destroyKey()
-                <br />
-                <span className="mr-2 text-zinc-600">{'>'}</span>{' '}
-                FileManagerHelper.deleteAllFiles()
-                <br />
-                <span className="mr-2 text-zinc-600">{'>'}</span> STATUS: SECURE
-                DESTRUCTION COMPLETE.
+                <div className="overflow-x-auto p-4 pt-8 md:p-6 md:pt-8">
+                  <div className="flex w-max min-w-full flex-col gap-1">
+                    <div className="flex">
+                      <span className="mr-2 shrink-0 text-zinc-600">{'>'}</span>
+                      <span>// {t('featureDetails.timer.code1')}</span>
+                    </div>
+                    <div className="flex">
+                      <span className="mr-2 shrink-0 text-zinc-600">{'>'}</span>
+                      <span>KeyManager.destroyKey()</span>
+                    </div>
+                    <div className="flex">
+                      <span className="mr-2 shrink-0 text-zinc-600">{'>'}</span>
+                      <span>FileManagerHelper.deleteAllFiles()</span>
+                    </div>
+                    <div className="flex">
+                      <span className="mr-2 shrink-0 text-zinc-600">{'>'}</span>
+                      <span>STATUS: SECURE DESTRUCTION COMPLETE.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
