@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import CustomLink from './CustomLink'
 import { ArrowLeft, ScrollText } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,13 +12,13 @@ const Terms = () => {
 
   return (
     <div className="relative mx-auto max-w-4xl px-6 pt-24 pb-20">
-      <Link
+      <CustomLink
         to="/"
         className="mb-10 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
         {t('terms.backToTop')}
-      </Link>
+      </CustomLink>
 
       <div className="mb-16">
         <div className="mb-6 flex items-center gap-4">

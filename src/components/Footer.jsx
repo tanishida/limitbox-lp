@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import CustomLink from './CustomLink'
 import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
@@ -22,9 +22,12 @@ const Footer = () => {
         </div>
 
         <div className="flex gap-6 text-sm text-zinc-500">
-          <Link to="/terms" className="transition-colors hover:text-white">
+          <CustomLink
+            to="/terms"
+            className="transition-colors hover:text-white"
+          >
             {t('footer.terms')}
-          </Link>
+          </CustomLink>
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -33,9 +36,12 @@ const Footer = () => {
           >
             {t('footer.privacy')}
           </a>
-          <Link to="/contact" className="transition-colors hover:text-white">
+          <CustomLink
+            to="/contact"
+            className="transition-colors hover:text-white"
+          >
             {t('footer.contact')}
-          </Link>
+          </CustomLink>
         </div>
 
         <p className="text-sm text-zinc-600">

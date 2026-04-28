@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import CustomLink from '../components/CustomLink'
 import { ArrowLeft, Mail, ExternalLink, MessageSquare } from 'lucide-react'
 import { useTranslation } from 'react-i18next' // 追加
 
@@ -14,13 +14,13 @@ const Contact = () => {
 
   return (
     <div className="mx-auto min-h-[80vh] max-w-3xl px-6 pt-32 pb-20">
-      <Link
+      <CustomLink
         to="/"
         className="mb-10 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
         {t('contact.back')}
-      </Link>
+      </CustomLink>
 
       <div className="mb-16 text-center">
         <h1 className="mb-6 text-4xl font-bold md:text-5xl">

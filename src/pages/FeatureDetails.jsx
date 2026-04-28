@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import CustomLink from '../components/CustomLink'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft,
@@ -19,13 +19,13 @@ const FeatureDetails = () => {
 
   return (
     <div className="relative mx-auto max-w-5xl px-6 pt-24 pb-20">
-      <Link
+      <CustomLink
         to="/"
         className="mb-10 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
         {t('featureDetails.back')}
-      </Link>
+      </CustomLink>
 
       <div className="mb-16">
         <h1 className="mb-6 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Apple } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import CustomLink from './CustomLink'
 import { useTranslation } from 'react-i18next' // 追加
 
 const Hero = () => {
@@ -94,17 +94,17 @@ const Hero = () => {
             {t('hero.download')} {/* ボタンテキストの翻訳 */}
           </a>
 
-          <Link
+          <CustomLink
             to="/features"
             className="group flex items-center gap-3 rounded-full border border-white/10 bg-zinc-800 px-8 py-4 font-mono text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-zinc-700"
           >
             [ READ_MORE ]
-          </Link>
+          </CustomLink>
         </div>
       </div>
 
       <div className="perspective-1000 relative mx-auto mt-20 w-full max-w-5xl">
-        <Link
+        <CustomLink
           to="/features"
           className="group relative block flex h-auto w-full cursor-pointer items-end justify-center overflow-hidden rounded-t-3xl border-x border-t border-blue-500/30 bg-gradient-to-t from-zinc-900 to-zinc-800 shadow-[0_-20px_50px_rgba(59,130,246,0.1)]"
         >
@@ -125,7 +125,7 @@ const Hero = () => {
             alt="LimitBox on iPhone"
             className="absolute relative right-10 bottom-0 z-10 h-auto w-1/4 translate-y-10 object-contain drop-shadow-2xl transition-transform delay-100 duration-700 group-hover:-translate-y-4"
           />
-        </Link>
+        </CustomLink>
       </div>
     </section>
   )
