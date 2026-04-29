@@ -10,7 +10,7 @@ const Contact = () => {
     window.scrollTo(0, 0)
   }, [])
 
-  const email = 'xxx@icloud.com'
+  const email = 'hiroakni@icloud.com'
   const xUrl = 'https://x.com/kawahiroBJ'
   const xId = '@kawahiroBJ'
 
