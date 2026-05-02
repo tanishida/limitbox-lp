@@ -154,6 +154,39 @@ const resources = {
         privacy: 'プライバシーポリシー',
         contact: 'お問い合わせ',
       },
+      p2pTeaser: {
+        title: 'サーバーに痕跡を残さない。次世代の「完全P2P転送システム」',
+        lead: 'LimitBoxは、従来のクラウドストレージのようにサーバーへデータを預けません。送信者と受信者のデバイスを直接つなぎ、強固に暗号化されたトンネルを構築。あなただけの安全なデータ転送ルートを実現しました。',
+        feature1Title: 'ゼロ知識アーキテクチャ',
+        feature1Desc:
+          'データは一切クラウドサーバーに保存されず、運営すら中身を見られません。',
+        feature2Title: '容量無制限・超高速',
+        feature2Desc:
+          'ギガバイト級のファイルも、デバイスの限界速度でダイレクトに送信します。',
+        feature3Title: 'VPN・ファイアウォール突破',
+        feature3Desc:
+          '独自の中継システムにより、どんな過酷な通信環境でも確実につながります。',
+        cta: '通信の仕組みを詳しく見る',
+      },
+      tech: {
+        heroTitle:
+          'LimitBoxの裏側：絶対に覗かれない「完全P2P・暗号化転送」の仕組み',
+        heroDesc:
+          'なぜLimitBoxは、大容量のシークレットファイルを安全に送れるのか？最新のWebRTC技術と軍事レベルの暗号化を組み合わせた「独自の通信インフラ」が、あなたのプライバシーを完璧に守り抜く仕組みをご紹介します。',
+        diagramPlaceholder: 'ここにアーキテクチャ図（SVG/PNG）を配置',
+        sec1Title: 'クラウドに預けない「完全P2P通信」',
+        sec1Desc:
+          '一般的なファイル転送サービスは、一度クラウドサーバーにファイルをアップロードし、そこからダウンロードする仕組みです。しかしこの方法では、サーバー上にデータが残るリスクが伴います。LimitBoxは、送信者と受信者のデバイス同士に直接「データのトンネル」を掘る完全P2P（Peer-to-Peer）通信を採用。データはサーバーに一切保存されず、あなたの手元から相手の手元へダイレクトに届きます。',
+        sec2Title: '運営も解読不可能な「エンドツーエンド暗号化（E2EE）」',
+        sec2Desc:
+          '通信を始める際、2つのデバイス間だけで使い捨ての「暗号鍵」を瞬時に交換します。ファイルはあなたのデバイスを出発する前に、この鍵を使って強固に暗号化（AES-GCM方式など）されます。万が一通信経路を傍受されても、暗号を解く鍵はあなたと相手しか持っていないため、私たちLimitBoxの運営・開発者であっても中身を覗き見ることは数学的に不可能です。',
+        sec3Title: 'どんな壁も越える「独自TURNサーバー」',
+        sec3Desc:
+          'ガチガチの企業内ファイアウォールや、出先でのVPN接続時など、デバイス同士が直接通信できない厳しいネットワーク環境もあります。その対策として、LimitBoxは専用の「中継サーバー（TURNサーバー）」を独自に構築しました。直接通信が弾かれた場合でも、即座にこの中継サーバーを経由するルートに自動で切り替わり、暗号化された状態を保ったまま確実にファイルを送り届けます。',
+        sec4Title: '大容量ファイルも落ちない「ストリーミング最適化」',
+        sec4Desc:
+          '1GBを超えるような巨大な動画ファイルでも、LimitBoxは安定して転送できます。ファイルを細かなブロック（チャンク）に分割し、ストリーミング形式で少しずつデバイスのメモリに読み込みながら送信する独自のメモリ最適化技術を搭載。システムの限界（OOMクラッシュ）を防ぎ、安全かつ超高速なファイル転送を実現しています。',
+      },
     },
   },
   en: {
@@ -305,6 +338,39 @@ const resources = {
         terms: 'Terms of Service',
         privacy: 'Privacy Policy',
         contact: 'Contact',
+      },
+      p2pTeaser: {
+        title: 'Leave No Trace. Next-Gen True P2P Transfer System.',
+        lead: 'Unlike traditional cloud storage, LimitBox never stores your data on a server. It builds a heavily encrypted, direct tunnel between the sender and receiver, creating an impenetrable route exclusively for your files.',
+        feature1Title: 'Zero-Knowledge Architecture',
+        feature1Desc:
+          'Your data is never stored on cloud servers. Even our team cannot access your files.',
+        feature2Title: 'Unlimited & Lightning Fast',
+        feature2Desc:
+          'Send gigabyte-level files directly at the maximum speed your device can handle.',
+        feature3Title: 'VPN & Firewall Traversal',
+        feature3Desc:
+          'Our custom relay system ensures seamless connection even in the strictest network environments.',
+        cta: 'Explore the Technology Behind LimitBox',
+      },
+      tech: {
+        heroTitle:
+          'Behind LimitBox: The Mechanics of True P2P Encrypted Transfer',
+        heroDesc:
+          'How does LimitBox transfer massive secret files so securely? Discover how our custom communication infrastructure, combining the latest WebRTC technology with military-grade encryption, fiercely protects your privacy.',
+        diagramPlaceholder: 'Insert Architecture Diagram (SVG/PNG) here',
+        sec1Title: 'True P2P Communication: Zero Cloud Storage',
+        sec1Desc:
+          "Standard file transfer services require you to upload files to a cloud server before downloading. This inherently leaves your data at risk on a third-party server. LimitBox utilizes True P2P (Peer-to-Peer) communication, building a direct data tunnel between the sender's and receiver's devices. Your data is never stored on any server; it travels directly from your hands to theirs.",
+        sec2Title: 'End-to-End Encryption (E2EE): Unbreakable Even by Us',
+        sec2Desc:
+          'Before any transfer begins, the two devices instantly exchange a one-time cryptographic key. Your files are heavily encrypted (e.g., AES-GCM) before they even leave your device. Because only you and the recipient hold the keys to decrypt the data, it is mathematically impossible for anyone—even the LimitBox developers—to view your files, even if the connection were intercepted.',
+        sec3Title: 'Custom TURN Server: Traversing Any Firewall',
+        sec3Desc:
+          'Strict corporate firewalls and VPNs often block direct device-to-device connections. To solve this, LimitBox operates its own dedicated relay servers (TURN servers). If a direct connection is blocked, the app seamlessly and automatically routes the encrypted data through our custom relay, guaranteeing delivery in even the harshest network environments.',
+        sec4Title: 'Streaming Optimization for Massive Files',
+        sec4Desc:
+          "LimitBox stably transfers enormous video files exceeding 1GB without breaking a sweat. We implemented proprietary memory optimization technology that splits files into tiny chunks, streaming them into the device's memory bit by bit during transmission. This completely prevents system crashes (Out-Of-Memory errors), ensuring safe and lightning-fast transfers.",
       },
     },
   },
