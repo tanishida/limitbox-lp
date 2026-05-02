@@ -11,12 +11,15 @@ import './i18n'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import LanguageInit from './components/LanguageInit'
 import DownloadCTA from './components/DownloadCTA'
+import P2PTeaser from './components/P2PTeaser'
+import Technology from './pages/Technology'
 
 const Home = () => (
   <>
     <Hero />
     <Features />
     <Security />
+    <P2PTeaser />
     <div className="mt-16 border-t border-white/10 pt-16">
       <DownloadCTA />
     </div>
@@ -39,6 +42,7 @@ function App() {
           <Route path="/features" element={<FeatureDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/technology" element={<Technology />} />
         </Routes>
         <Footer />
       </div>
