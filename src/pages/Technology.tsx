@@ -1,5 +1,4 @@
-import React from 'react'
-// X アイコンを追加
+import React, { useEffect } from 'react'
 import { Network, Lock, Server, Cpu, X, ArrowLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import CustomLink from '../components/CustomLink'
@@ -9,6 +8,10 @@ const Technology = () => {
 
   // モーダルの開閉状態を管理するState
   const [isModalOpen, setIsModalOpen] = React.useState(false)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="min-h-screen bg-zinc-950 px-6 py-24 font-sans text-zinc-200">
