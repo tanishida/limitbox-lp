@@ -60,7 +60,10 @@ const resources = {
           title: '第5条（免責事項）',
           list: [
             '開発者は、本アプリに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを明示的にも黙示的にも保証しておりません。',
-            '開発者は、本アプリに起因してユーザーに生じたあらゆる損害（データの消失、自爆タイマーの作動によるデータの完全消去、デバイスの紛失・故障に伴うデータ喪失を含みますがこれらに限られません）について一切の責任を負いません。',
+            '【P2P通信に関する免責】本アプリが提供するファイル転送は、P2P（Peer-to-Peer）通信によるユーザー間の直接送受信です。送信先の誤指定、転送先での情報漏洩、ネットワーク環境に起因する通信の失敗等について、開発者は一切の責任を負わず、すべてユーザーの自己責任において行われるものとします。',
+            '【バックアップ等の非保持】本アプリはデータを外部サーバー等に一切保持しないため、開発者はデータのバックアップや復旧を行う義務をいかなる場合も負いません。',
+            '【データの非復元性】自爆タイマー機能によって消去されたデータ、またはユーザーの誤操作や予期せぬ不具合によって消失したデータは、開発者であっても技術的・物理的に復元不可能です。これらに起因して生じた損害について、開発者は一切の責任を負いません。',
+            '開発者は、本アプリの利用または利用不能に起因してユーザーに生じたあらゆる損害（デバイスの紛失・故障に伴うデータ喪失を含みますがこれらに限られません）について、一切の責任を負いません。',
           ],
         },
         art6: {
@@ -213,64 +216,67 @@ const resources = {
         backToTop: 'Back to Top',
         title: 'Terms of Service',
         intro:
-          'These Terms of Service (hereinafter referred to as the "Terms") establish the terms and conditions for providing LimitBox (hereinafter referred to as the "App") and the rights and obligations between the users and the developer. By using the App, you must agree to these Terms.',
+          'These Terms of Service (hereinafter referred to as the "Terms") set forth the terms and conditions for providing LimitBox (hereinafter referred to as the "App") and the rights and obligations between the users and the Developer. You must agree to these Terms to use the App.',
         art1: {
           title: 'Article 1 (Application)',
-          desc: 'These Terms shall apply to all relationships between the user and the developer pertaining to the use of the App.',
+          desc: 'These Terms shall apply to all relationships between the user and the Developer regarding the use of the App.',
         },
         art2: {
-          title: 'Article 2 (Characteristics of the App and Data Handling)',
+          title: 'Article 2 (App Characteristics and Data Handling)',
           list: [
             "The App encrypts and stores data exclusively within the local environment of the user's device (iPhone, iPad, Mac, etc.).",
-            'The developer will never automatically back up, transmit, or collect the data stored within the App to any external servers.',
-            'If the user deletes (uninstalls) the App from their device, all data stored within the App will be deleted simultaneously and cannot be recovered.',
+            'The Developer will never automatically back up, transmit, or collect the data stored within the App to external servers.',
+            'If the user deletes (uninstalls) the App from their device, all data stored within the App will also be permanently deleted simultaneously and cannot be recovered.',
           ],
         },
         art3: {
-          title: 'Article 3 (Management of Passcode and Biometrics)',
+          title:
+            'Article 3 (Management of Passcode and Biometric Authentication)',
           list: [
-            'The user is strictly responsible for managing the passcode used to unlock the App.',
-            'Due to the highly advanced encryption specifications of the App, if the user forgets their passcode, the developer cannot, under any circumstances, decrypt, rescue data, or reissue the passcode.',
+            'The user shall strictly manage the passcode used to unlock the App under their own responsibility.',
+            "Due to the App's highly secure encryption specifications, if the user forgets their passcode, the Developer cannot decrypt the data, rescue the data, or reissue the passcode by any means whatsoever.",
           ],
         },
         art4: {
-          title:
-            'Article 4 (Consent Regarding the Self-Destruct Timer Feature)',
+          title: 'Article 4 (Consent to Self-Destruct Timer Feature)',
           list: [
-            'The App is equipped with a feature (hereinafter referred to as the "Self-Destruct Timer") that automatically and completely erases stored data if the App is not accessed for a certain period set by the user.',
-            'When enabling the Self-Destruct Timer, the user must fully understand that the data will be permanently erased beyond recovery after the specified period, and shall use this feature at their own risk.',
+            'The App is equipped with a feature (hereinafter referred to as the "Self-Destruct Timer") that automatically and permanently erases stored data if the App is not accessed for a certain period set by the user.',
+            'When enabling the Self-Destruct Timer, the user must fully understand that their data will be irretrievably erased after the specified period, and shall use this feature entirely at their own risk.',
           ],
         },
         art5: {
-          title: 'Article 5 (Disclaimer of Warranties)',
+          title: 'Article 5 (Disclaimer)',
           list: [
-            'The developer provides no explicit or implicit guarantees that the App is free of factual or legal defects (including flaws, errors, bugs, or infringements related to safety, reliability, accuracy, completeness, effectiveness, fitness for a particular purpose, or security).',
-            'The developer shall not be liable for any damages incurred by the user arising from the App (including, but not limited to, data loss, complete data erasure due to the activation of the Self-Destruct Timer, or data loss associated with device loss or failure).',
+            'The Developer does not expressly or impliedly guarantee that the App is free from de facto or legal defects (including flaws, errors, bugs, or infringements of rights relating to safety, reliability, accuracy, completeness, effectiveness, fitness for a particular purpose, security, etc.).',
+            "[Disclaimer regarding P2P Communication] The file transfer provided by the App is a direct transmission between users via P2P (Peer-to-Peer) communication. The Developer assumes no responsibility for any erroneous designation of recipients, information leaks at the transfer destination, or communication failures caused by the network environment. All transfers are conducted entirely at the user's own risk.",
+            '[No Server Backups] Since the App does not retain any data on external servers, the Developer is under no obligation whatsoever to back up or restore data under any circumstances.',
+            '[Irretrievability of Data] Data erased by the Self-Destruct Timer, or lost due to user error or unexpected malfunctions, is technically and physically impossible to recover, even by the Developer. The Developer assumes no responsibility for any damages arising from such data loss.',
+            'The Developer shall not be liable for any damages (including but not limited to data loss due to device loss or malfunction) incurred by the user arising from the use or inability to use the App.',
           ],
         },
         art6: {
-          title: 'Article 6 (Prohibited Acts)',
-          desc: 'Users must not engage in any of the following acts when using the App:',
+          title: 'Article 6 (Prohibitions)',
+          desc: 'When using the App, the user must not engage in the following acts:',
           list: [
-            'Acts that violate laws or public order and morals',
-            'Acts related to criminal activities',
-            'Acts that destroy or interfere with the functionality of the App',
-            'Any other acts that the developer deems inappropriate',
+            'Acts that violate laws and regulations or public order and morals.',
+            'Acts related to criminal activities.',
+            'Acts that destroy or interfere with the functioning of the App.',
+            'Other acts that the Developer deems inappropriate.',
           ],
         },
         art7: {
-          title: 'Article 7 (Changes to Terms of Service)',
-          desc: 'The developer may change these Terms at any time without notifying users if deemed necessary. The modified Terms of Service will become effective upon being posted within the App or on the related website.',
+          title: 'Article 7 (Modification of Terms)',
+          desc: 'The Developer may change these Terms at any time without notifying the user if deemed necessary. The modified Terms shall become effective from the time they are posted within the App or on the related website.',
         },
         art8: {
           title: 'Article 8 (Governing Law and Jurisdiction)',
           list: [
-            'The interpretation of these Terms shall be governed by the laws of Japan.',
-            'In the event of a dispute regarding the App, the Yokohama District Court shall be the exclusive court of first instance.',
+            'These Terms shall be governed by and construed in accordance with the laws of Japan.',
+            'In the event of any dispute regarding the App, the Yokohama District Court shall have exclusive jurisdiction as the court of first instance.',
           ],
         },
         supplement: 'Supplementary Provision',
-        date: 'Enacted on April 26, 2026',
+        date: 'Established on April 26, 2026',
       },
       cta: {
         title: 'Lock your secrets down today.',
