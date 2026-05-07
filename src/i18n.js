@@ -90,6 +90,30 @@ const resources = {
         supplement: '附則',
         date: '2026年4月26日 制定',
       },
+      privacy: {
+        backToTop: 'トップページに戻る',
+        title: 'プライバシーポリシー',
+        docId: 'LB-PP-001',
+        sections: [
+          {
+            title: '1. 情報の収集と利用',
+            desc: '本アプリ「LimitBox」は、ユーザーのデバイス内で完結するファイル管理アプリです。ユーザーの写真、動画、ファイル、パスコードなどの個人情報を、開発者が外部サーバーに送信、収集、保存、または第三者へ提供することは一切ありません。',
+          },
+          {
+            title: '2. 生体認証（Face ID）の利用',
+            desc: '本アプリは、アプリのロック解除を目的としてデバイスの生体認証（Face ID）を利用します。生体認証のデータはデバイスOS内で安全に処理され、アプリ側で取得・保存することはありません。',
+          },
+          {
+            title: '3. デバイス内のデータ保護',
+            desc: '本アプリ内に保存されたデータは、設定されたタイマー（デッドマン・スイッチ）に基づき、デバイス内から完全に削除されます。',
+          },
+          {
+            title: '4. お問い合わせ先',
+            desc: '本ポリシーに関するお問い合わせは、アプリ内の連絡先までお願いいたします。',
+          },
+        ],
+        date: '2026年4月21日 改定',
+      },
       cta: {
         title: 'あなたの秘密を、今すぐロック。',
         subtitle: 'STATUS: READY FOR DEPLOYMENT. (完全無料)',
@@ -277,6 +301,30 @@ const resources = {
         },
         supplement: 'Supplementary Provision',
         date: 'Established on April 26, 2026',
+      },
+      privacy: {
+        backToTop: 'Back to Top',
+        title: 'Privacy Policy',
+        docId: 'LB-PP-001',
+        sections: [
+          {
+            title: '1. Information Collection and Use',
+            desc: "LimitBox is a file management application that operates entirely within the user's device. No personal information such as photos, videos, files, or passcodes is transmitted to, collected by, stored on external servers, or shared with third parties by the developer.",
+          },
+          {
+            title: '2. Use of Biometric Authentication (Face ID)',
+            desc: 'This app uses biometric authentication (Face ID) for the purpose of unlocking the app. Biometric data is processed securely within the device OS and is not accessed or stored by the app itself.',
+          },
+          {
+            title: '3. Data Protection within the Device',
+            desc: 'Data stored within this app is permanently deleted from the device based on the user-defined timer (Deadman Switch).',
+          },
+          {
+            title: '4. Contact Us',
+            desc: "For any questions regarding this policy, please contact us via the app's contact information.",
+          },
+        ],
+        date: 'Revised: April 21, 2026',
       },
       cta: {
         title: 'Lock your secrets down today.',

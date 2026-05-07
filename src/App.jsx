@@ -13,6 +13,7 @@ import LanguageInit from './components/LanguageInit'
 import DownloadCTA from './components/DownloadCTA'
 import P2PTeaser from './components/P2PTeaser'
 import Technology from './pages/Technology'
+import Privacy from './pages/Privacy'
 
 const Home = () => (
   <>
@@ -43,6 +44,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/technology" element={<Technology />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
         <Footer />
       </div>

@@ -28,14 +28,12 @@ const Footer = () => {
           >
             {t('footer.terms')}
           </CustomLink>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://well-danger-b16.notion.site/LimitBox-349f48eee894804bb774ed7fb156d886"
+          <CustomLink
+            to="/privacy"
             className="transition-colors hover:text-white"
           >
             {t('footer.privacy')}
-          </a>
+          </CustomLink>
           <CustomLink
             to="/contact"
             className="transition-colors hover:text-white"
