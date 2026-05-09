@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import CustomLink from '../components/CustomLink'
-// プライバシーに合わせてアイコンを ShieldCheck に変更しています
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,11 +7,9 @@ const Privacy = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    // ページ遷移時に一番上にスクロールする処理
     window.scrollTo(0, 0)
   }, [])
 
-  // 翻訳データからセクションの配列を取得
   const sections = t('privacy.sections', { returnObjects: true })
 
   return (
@@ -37,7 +34,7 @@ const Privacy = () => {
           </h1>
         </div>
         <p className="font-mono text-sm text-zinc-400">
-          LAST UPDATED: 2026.04.21
+          LAST UPDATED: 2026.05.09
           <br />
           DOCUMENT ID: {t('privacy.docId')}
         </p>
@@ -49,7 +46,9 @@ const Privacy = () => {
           {sections.map((section, index) => (
             <section key={index}>
               <h2 className="mb-6 text-2xl font-bold">{section.title}</h2>
-              <p className="leading-relaxed text-zinc-300">{section.desc}</p>
+              <p className="leading-relaxed whitespace-pre-wrap text-zinc-300">
+                {section.desc}
+              </p>
             </section>
           ))}
 

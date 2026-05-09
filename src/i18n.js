@@ -93,26 +93,34 @@ const resources = {
       privacy: {
         backToTop: 'トップページに戻る',
         title: 'プライバシーポリシー',
-        docId: 'LB-PP-001',
+        docId: 'LB-PP-002',
         sections: [
           {
-            title: '1. 情報の収集と利用',
-            desc: '本アプリ「LimitBox」は、ユーザーのデバイス内で完結するファイル管理アプリです。ユーザーの写真、動画、ファイル、パスコードなどの個人情報を、開発者が外部サーバーに送信、収集、保存、または第三者へ提供することは一切ありません。',
+            title: '1. 基本方針（情報の非収集）',
+            desc: '本アプリ「LimitBox」は、ユーザーの絶対的なプライバシー保護を最優先事項として設計された、完全ローカル動作型のファイル管理アプリケーションです。開発者がユーザーの保存データ（写真、動画、ファイル等）やロック解除のためのパスコードを外部サーバーへ送信、収集、閲覧、または第三者へ提供することは、物理的・技術的に一切不可能な仕様となっています。',
           },
           {
-            title: '2. 生体認証（Face ID）の利用',
-            desc: '本アプリは、アプリのロック解除を目的としてデバイスの生体認証（Face ID）を利用します。生体認証のデータはデバイスOS内で安全に処理され、アプリ側で取得・保存することはありません。',
+            title: '2. デバイス内で完結する処理について',
+            desc: '本アプリは、以下の機能をすべてユーザーのデバイス（iPhone, iPad, Mac等）のローカル環境内でのみ実行し、外部へデータを送信することはありません。\n\n・生体認証（Face ID / Touch ID）: アプリのロック解除にのみ使用され、認証データはOS内で安全に処理されます。アプリがこれらの生体情報を取得・保存することはありません。\n・データの暗号化と保存: アプリ内に取り込まれたファイルは、デバイスのストレージ内で強力に暗号化されて保存されます。\n・自爆タイマー（デッドマン・スイッチ）: ユーザーが設定した期間アクセスがなかった場合、デバイス内のデータは自動的かつ復元不可能な形で完全消去されます。',
           },
           {
-            title: '3. デバイス内のデータ保護',
-            desc: '本アプリ内に保存されたデータは、設定されたタイマー（デッドマン・スイッチ）に基づき、デバイス内から完全に削除されます。',
+            title: '3. P2Pファイル転送機能に関する通信データの取り扱い',
+            desc: '本アプリは、デバイス間で直接ファイルを送受信するP2P（Peer-to-Peer）機能を提供しています。この機能の性質上、以下の通信処理が行われます。\n\n・接続を確立するため、一時的に中継サーバー（シグナリングサーバーおよびSTUN/TURNサーバー）を経由して通信のルーティング（IPアドレスの交換等）が行われます。\n・これらのサーバーは通信の「通り道」としてのみ機能し、通信ログ、IPアドレス、または送受信されるファイルデータをサーバー上に記録・保存することは一切ありません。\n・送受信されるファイルはすべて強力なエンドツーエンド暗号化（E2EE）によって保護されており、開発者や中継サーバーの管理者が中身を解読することは不可能です。',
           },
           {
-            title: '4. お問い合わせ先',
-            desc: '本ポリシーに関するお問い合わせは、アプリ内の連絡先までお願いいたします。',
+            title: '4. アナリティクスおよび広告について',
+            desc: '現在、本アプリはユーザーの行動履歴を追跡する解析ツール（アナリティクス）や、第三者の広告配信システム（SDK）を一切組み込んでおりません。将来的にこれらを導入する場合は、事前に本ポリシーを更新し、ユーザーに通知します。',
+          },
+          {
+            title: '5. 免責事項',
+            desc: '本アプリ内に保存されたデータは、ユーザー自身の責任において管理されるものとします。パスコードの忘失、自爆タイマーの作動、またはデバイスの紛失・故障に伴うデータの消失について、開発者はいかなる方法を用いてもデータの復元や救出を行うことはできず、一切の責任を負いません。',
+          },
+          {
+            title: '6. お問い合わせ先',
+            desc: '本ポリシーに関するご質問やお問い合わせは、アプリ内の設定画面に記載されている連絡先までお願いいたします。',
           },
         ],
-        date: '2026年4月21日 改定',
+        date: '2026年5月9日 改定',
       },
       cta: {
         title: 'あなたの秘密を、今すぐロック。',
@@ -305,26 +313,34 @@ const resources = {
       privacy: {
         backToTop: 'Back to Top',
         title: 'Privacy Policy',
-        docId: 'LB-PP-001',
+        docId: 'LB-PP-002',
         sections: [
           {
-            title: '1. Information Collection and Use',
-            desc: "LimitBox is a file management application that operates entirely within the user's device. No personal information such as photos, videos, files, or passcodes is transmitted to, collected by, stored on external servers, or shared with third parties by the developer.",
+            title: '1. Basic Policy (No Data Collection)',
+            desc: 'LimitBox is a fully local file management application designed with your absolute privacy as the top priority. It is physically and technically impossible for the developer to transmit, collect, view, or share your stored data (photos, videos, files, etc.) or your unlock passcode to any external server or third party.',
           },
           {
-            title: '2. Use of Biometric Authentication (Face ID)',
-            desc: 'This app uses biometric authentication (Face ID) for the purpose of unlocking the app. Biometric data is processed securely within the device OS and is not accessed or stored by the app itself.',
+            title: '2. Local Device Processing',
+            desc: "This app executes all of the following features entirely within the local environment of your device (iPhone, iPad, Mac, etc.) and never transmits data externally.\n\n- Biometric Authentication (Face ID / Touch ID): Used solely to unlock the app. Biometric data is processed securely within the OS, and the app never accesses or stores this information.\n- Data Encryption and Storage: Files imported into the app are heavily encrypted and stored strictly within the device's storage.\n- Self-Destruct Timer (Deadman's Switch): If the app is not accessed for a user-defined period, the data within the device is automatically and irretrievably erased.",
           },
           {
-            title: '3. Data Protection within the Device',
-            desc: 'Data stored within this app is permanently deleted from the device based on the user-defined timer (Deadman Switch).',
+            title: '3. Handling of Communication Data for P2P File Transfer',
+            desc: 'This app provides a P2P (Peer-to-Peer) file transfer feature that allows direct sending and receiving of files between devices. Due to the nature of this feature, the following communication processes occur:\n\n- To establish a connection, communication routing (such as exchanging IP addresses) is temporarily processed via relay servers (Signaling servers and STUN/TURN servers).\n- These servers function strictly as a "passageway." They absolutely do not record or store communication logs, IP addresses, or the transferred file data.\n- All transferred files are protected by strong End-to-End Encryption (E2EE), making it technically impossible for the developer or relay server administrators to decrypt the contents.',
           },
           {
-            title: '4. Contact Us',
-            desc: "For any questions regarding this policy, please contact us via the app's contact information.",
+            title: '4. Analytics and Advertising',
+            desc: 'Currently, this app does not incorporate any analytics tools to track user behavior or third-party advertising systems (SDKs). If we decide to introduce these in the future, we will update this policy and notify users in advance.',
+          },
+          {
+            title: '5. Disclaimer',
+            desc: "Data stored within this app is managed at the user's own risk. In the event of data loss due to a forgotten passcode, the activation of the Self-Destruct Timer, or the loss or malfunction of the device, the developer cannot restore or rescue the data by any means and assumes no responsibility whatsoever.",
+          },
+          {
+            title: '6. Contact Information',
+            desc: "For any questions or inquiries regarding this policy, please contact us via the contact information provided in the app's settings screen.",
           },
         ],
-        date: 'Revised: April 21, 2026',
+        date: 'Revised: May 9, 2026',
       },
       cta: {
         title: 'Lock your secrets down today.',
