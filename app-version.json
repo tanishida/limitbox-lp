@@ -1,7 +1,7 @@
 {
-  "minimumSupportedVersion": "1.6.4",
-  "latestVersion": "1.6.5",
+  "minimumSupportedVersion": "9.9.9",
+  "latestVersion": "9.9.9",
   "forceUpdate": false,
-  "message": "最新版にアップデートしてください。",
+  "message": "検証: 更新必須です。",
   "storeURL": "https://apps.apple.com/us/app/limitbox/id6762798328"
 }
