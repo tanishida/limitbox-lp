@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App Store Screenshots Generator (Pro)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+      .device-mockup {
+        box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.15);
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-100 p-4 font-sans md:p-8">
+    <div class="mx-auto max-w-screen-2xl">
+      <header class="mb-10 text-center">
+        <h1 class="mb-3 text-2xl font-bold text-gray-800 md:text-3xl">
+          App Store Screenshot Generator Pro
+        </h1>
+        <p class="text-sm text-gray-600 md:text-base">
+          iPhone (1284×2778)、iPad (2048×2732)、Mac (2560×1600)
+          の全解像度に対応。<br />
+          画像をはめ込んで「保存する」を押すだけで、App
+          Storeのエラーを回避した<b>透過なしの高画質JPEG</b>が出力されます。
+        </p>
+      </header>
+
+      <!-- ここにJavaScriptで全コンテンツが生成されます -->
+      <div id="app-root"></div>
+    </div>
+
+    <script>
+      // ----------------------------------------------------
+      // 1. データ定義
+      // ----------------------------------------------------
+      const slides = [
+        {
+          id: 1,
+          titleJP:
+            "誰にも見られない<br><span class='text-cyan-400'>極秘空間</span>",
+          descJP: '強固なセキュリティで<br>あなたのプライバシーを完全保護',
+          titleEN:
+            "Top-Secret Space<br><span class='text-cyan-400'>Just for You</span>",
+          descEN: 'Complete privacy protection<br>with robust security',
+          bgClass: 'bg-gradient-to-br from-slate-900 via-gray-900 to-black',
+          iconHtml:
+            '<svg class="w-16 h-16 mx-auto text-cyan-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>',
+          mockTitleJP: 'Face ID / ホーム画面',
+          mockTitleEN: 'Face ID / Home Screen',
+          btnColor: 'bg-cyan-600 hover:bg-cyan-700',
+          fileSuffix: 'concept',
+        },
+        {
+          id: 2,
+          titleJP:
+            "大切なデータを<br><span class='text-blue-400'>暗号化して保管</span>",
+          descJP: '大容量の写真や動画も<br>スムーズに管理・閲覧',
+          titleEN:
+            "Keep Your Data<br><span class='text-blue-400'>Encrypted & Safe</span>",
+          descEN: 'Smoothly manage & view<br>large photos and videos',
+          bgClass: 'bg-gradient-to-b from-gray-900 to-slate-900',
+          iconHtml:
+            '<svg class="w-16 h-16 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>',
+          mockTitleJP: '写真・動画一覧画面',
+          mockTitleEN: 'Photo & Video Gallery',
+          btnColor: 'bg-blue-600 hover:bg-blue-700',
+          fileSuffix: 'media',
+        },
+        {
+          id: 3,
+          titleJP:
+            "指定時間で消去<br><span class='text-red-400'>自爆タイマー</span>",
+          descJP: '万が一の事態に備える<br>究極の自己防衛機能',
+          titleEN:
+            "Auto-Delete<br><span class='text-red-400'>Self-Destruct Timer</span>",
+          descEN: 'The ultimate self-defense<br>against emergencies',
+          bgClass: 'bg-gradient-to-b from-gray-900 to-red-900/40',
+          iconHtml:
+            '<svg class="w-16 h-16 mx-auto text-red-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+          mockTitleJP: '自爆タイマー設定画面',
+          mockTitleEN: 'Self-Destruct Settings',
+          btnColor: 'bg-red-600 hover:bg-red-700',
+          fileSuffix: 'timer',
+        },
+        {
+          id: 4,
+          titleJP:
+            "サーバー不要<br><span class='text-fuchsia-400'>P2Pデータ共有</span>",
+          descJP: '端末間で直接やり取り<br>どこにも痕跡を残さない',
+          titleEN:
+            "Serverless<br><span class='text-fuchsia-400'>P2P Data Sharing</span>",
+          descEN: 'Direct device-to-device transfer<br>leaving no trace',
+          bgClass: 'bg-gradient-to-b from-gray-900 to-fuchsia-900/40',
+          iconHtml:
+            '<svg class="w-16 h-16 mx-auto text-fuchsia-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>',
+          mockTitleJP: 'P2P送受信画面',
+          mockTitleEN: 'P2P Transfer Screen',
+          btnColor: 'bg-fuchsia-600 hover:bg-fuchsia-700',
+          fileSuffix: 'p2p',
+        },
+        {
+          id: 5,
+          titleJP:
+            "外部ファイルも<br><span class='text-teal-400'>安全に取り込み</span>",
+          descJP: '共有Inboxで他のアプリから<br>シームレスにデータ移行',
+          titleEN:
+            "Securely Import<br><span class='text-teal-400'>External Files</span>",
+          descEN: 'Seamless data migration<br>via Shared Inbox',
+          bgClass: 'bg-gradient-to-b from-gray-900 to-teal-900/40',
+          iconHtml:
+            '<svg class="w-16 h-16 mx-auto text-teal-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>',
+          mockTitleJP: '共有Inbox画面',
+          mockTitleEN: 'Shared Inbox Screen',
+          btnColor: 'bg-teal-600 hover:bg-teal-700',
+          fileSuffix: 'inbox',
+        },
+      ]
+
+      const platforms = [
+        {
+          id: 'iphone',
+          nameJP: 'iPhone版 (1284 × 2778px)',
+          nameEN: 'iPhone Version',
+          containerW: 'w-[350px]',
+          containerH: 'h-[757px]', // 1 : 2.16
+          mockW: 'w-[240px]',
+          mockH: 'h-[520px]',
+          targetW: 1284,
+          targetH: 2778,
+          isLandscape: false,
+          hasNotch: true,
+        },
+        {
+          id: 'ipad',
+          nameJP: 'iPad版 (2048 × 2732px)',
+          nameEN: 'iPad Version',
+          containerW: 'w-[480px]',
+          containerH: 'h-[640px]', // 1 : 1.33
+          mockW: 'w-[380px]',
+          mockH: 'h-[490px]',
+          targetW: 2048,
+          targetH: 2732,
+          isLandscape: false,
+          hasNotch: false,
+        },
+        {
+          id: 'mac',
+          nameJP: 'Mac版 (2560 × 1600px)',
+          nameEN: 'Mac Version',
+          containerW: 'w-[720px]',
+          containerH: 'h-[450px]', // 1.6 : 1
+          mockW: 'w-[400px]',
+          mockH: 'h-[250px]',
+          targetW: 2560,
+          targetH: 1600,
+          isLandscape: true,
+          hasNotch: false,
+        },
+      ]
+
+      const languages = [
+        { code: 'jp', label: '日本語版', theme: 'border-cyan-500' },
+        { code: 'en', label: '英語版 (English)', theme: 'border-blue-500' },
+      ]
+
+      // ----------------------------------------------------
+      // 2. HTML生成ロジック
+      // ----------------------------------------------------
+      const appRoot = document.getElementById('app-root')
+      let htmlContent = ''
+
+      platforms.forEach((platform) => {
+        languages.forEach((lang) => {
+          const isEN = lang.code === 'en'
+          const sectionTitle = isEN ? platform.nameEN : platform.nameJP
+
+          htmlContent += `
+                    <div class="mb-4 ml-4 pt-10 border-t border-gray-300">
+                        <h2 class="text-xl font-bold text-gray-700 border-l-4 ${lang.theme} pl-3">
+                            ${sectionTitle} - ${lang.label}
+                        </h2>
+                    </div>
+                    <div class="flex gap-8 overflow-x-auto pb-12 hide-scrollbar snap-x snap-mandatory px-4">
+                `
+
+          slides.forEach((slide) => {
+            const title = isEN ? slide.titleEN : slide.titleJP
+            const desc = isEN ? slide.descEN : slide.descJP
+            const mockTitle = isEN ? slide.mockTitleEN : slide.mockTitleJP
+
+            const fileBase = `${platform.id}_${slide.id}_${slide.fileSuffix}_${lang.code}`
+            const imgId = `img-${fileBase}`
+            const placeholderId = `ph-${fileBase}`
+            const targetId = `shot-${fileBase}`
+            const btnLabelFile = isEN ? 'Select Image' : '画像を選択'
+            const btnLabelSave = isEN ? 'Save JPG' : '保存する'
+
+            const notchHtml = platform.hasNotch
+              ? `<div class="absolute top-0 w-[120px] h-[25px] bg-gray-700 rounded-b-2xl z-20"></div>`
+              : ''
+            const outerRadius =
+              platform.id === 'mac' ? 'rounded-xl' : 'rounded-[2rem]'
+            const innerRadius =
+              platform.id === 'mac' ? 'rounded-lg' : 'rounded-[1.5rem]'
+
+            // Mac用(横長) と iOS用(縦長) でレイアウトを切り替え
+            let innerContent = ''
+            if (platform.isLandscape) {
+              innerContent = `
+                            <div class="flex flex-row items-center h-full w-full">
+                                <div class="relative z-10 w-2/5 text-left pl-6">
+                                    <h2 class="text-4xl font-bold text-white leading-tight mb-4">${title}</h2>
+                                    <p class="text-gray-400 text-lg">${desc}</p>
+                                </div>
+                                <div class="w-3/5 flex justify-center items-center">
+                                    <div class="relative ${platform.mockW} ${platform.mockH} bg-gray-800 ${outerRadius} border-[4px] border-gray-600 device-mockup overflow-hidden flex flex-col justify-center items-center shadow-2xl">
+                                        <img id="${imgId}" src="" class="absolute inset-0 w-full h-full object-cover z-10 hidden ${innerRadius}" crossorigin="anonymous" />
+                                        <div id="${placeholderId}" class="z-0 flex flex-col items-center">
+                                            ${slide.iconHtml}
+                                            <p class="text-gray-400 text-sm font-bold">${mockTitle}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+            } else {
+              innerContent = `
+                            <div class="relative z-10 text-center mt-6 mb-6">
+                                <h2 class="${platform.id === 'ipad' ? 'text-4xl' : 'text-3xl'} font-bold text-white leading-tight mb-3">${title}</h2>
+                                <p class="text-gray-400 text-base">${desc}</p>
+                            </div>
+                            <div class="relative ${platform.mockW} ${platform.mockH} bg-gray-800 ${outerRadius} border-[6px] border-gray-700 device-mockup overflow-hidden flex flex-col justify-center items-center shadow-2xl">
+                                ${notchHtml}
+                                <img id="${imgId}" src="" class="absolute inset-0 w-full h-full object-cover z-10 hidden ${innerRadius}" crossorigin="anonymous" />
+                                <div id="${placeholderId}" class="z-0 flex flex-col items-center">
+                                    ${slide.iconHtml}
+                                    <p class="text-gray-400 text-sm font-bold">${mockTitle}</p>
+                                </div>
+                            </div>
+                        `
+            }
+
+            // 💡 AppStore対策: キャプチャコンテナ自体の角丸とボーダーを削除し、長方形にする
+            htmlContent += `
+                        <div class="snap-center shrink-0 flex flex-col items-center gap-4">
+                            <div id="${targetId}" class="${platform.containerW} ${platform.containerH} ${slide.bgClass} p-6 relative overflow-hidden flex ${platform.isLandscape ? '' : 'flex-col items-center'}">
+                                ${innerContent}
+                            </div>
+                            <div class="flex gap-3 w-full px-2">
+                                <label class="flex-1 cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 rounded-xl text-sm font-bold text-center shadow-sm transition">
+                                    ${btnLabelFile}
+                                    <input type="file" accept="image/*" class="hidden" onchange="loadImage(event, '${imgId}', '${placeholderId}')">
+                                </label>
+                                <!-- 💡 ファイル名を .jpg で渡す -->
+                                <button onclick="downloadImage('${targetId}', '${fileBase}.jpg', ${platform.targetW}, ${platform.targetH})" class="flex-1 ${slide.btnColor} text-white py-2 rounded-xl text-sm font-bold text-center shadow-md transition">
+                                    ${btnLabelSave}
+                                </button>
+                            </div>
+                        </div>
+                    `
+          })
+          htmlContent += `</div>` // overflow div 閉じ
+        })
+      })
+
+      appRoot.innerHTML = htmlContent
+
+      // ----------------------------------------------------
+      // 3. 機能スクリプト
+      // ----------------------------------------------------
+      function loadImage(event, imgId, placeholderId) {
+        const file = event.target.files[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          const img = document.getElementById(imgId)
+          img.src = e.target.result
+          img.classList.remove('hidden')
+          document.getElementById(placeholderId).classList.add('hidden')
+        }
+        reader.readAsDataURL(file)
+      }
+
+      // html2canvasで描画後、App Store要件の解像度に正確にリサイズして透過なしJPEGで出力する
+      function downloadImage(targetId, filename, targetWidth, targetHeight) {
+        const target = document.getElementById(targetId)
+        const btn = event.currentTarget
+        const originalText = btn.innerText
+        btn.innerText = '処理中...'
+        btn.disabled = true
+
+        // 1. 元のDOMを非常に高い解像度でキャプチャする（画質劣化防止）
+        // 💡 AppStore対策: キャプチャ時にも背景を黒にして透過を防止
+        html2canvas(target, {
+          scale: 4,
+          backgroundColor: '#000000',
+          useCORS: true,
+        })
+          .then((canvas) => {
+            // 2. 指定されたターゲットサイズ（1284x2778等）の新しいCanvasを作成
+            const destCanvas = document.createElement('canvas')
+            destCanvas.width = targetWidth
+            destCanvas.height = targetHeight
+            const ctx = destCanvas.getContext('2d')
+
+            // 💡 AppStore対策: 描画前に念のため真っ黒で塗りつぶす（アルファチャネル対策のダメ押し）
+            ctx.fillStyle = '#000000'
+            ctx.fillRect(0, 0, targetWidth, targetHeight)
+
+            // 3. 高品質なリサイズ処理を適用
+            ctx.imageSmoothingEnabled = true
+            ctx.imageSmoothingQuality = 'high'
+
+            // 4. 新しいCanvasへリサイズしながら描画
+            ctx.drawImage(canvas, 0, 0, targetWidth, targetHeight)
+
+            // 5. 💡 アルファチャネルを完全に持たない「JPEG」フォーマットで出力
+            const link = document.createElement('a')
+            link.download = filename
+            link.href = destCanvas.toDataURL('image/jpeg', 1.0) // 1.0 = 最高画質
+            link.click()
+
+            btn.innerText = originalText
+            btn.disabled = false
+          })
+          .catch((err) => {
+            console.error('画像化エラー:', err)
+            alert('画像の生成に失敗しました。')
+            btn.innerText = originalText
+            btn.disabled = false
+          })
+      }
+    </script>
+  </body>
+</html>
