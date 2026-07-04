@@ -8,6 +8,21 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const appVersionFile = resolve(__dirname, 'app-version.json')
 
+function generatorRoute() {
+  return {
+    name: 'generator-route',
+    configureServer(server) {
+      server.middlewares.use((req, _, next) => {
+        if (req.url === '/generator' || req.url?.startsWith('/generator?')) {
+          req.url = req.url.replace('/generator', '/generator.html')
+        }
+
+        next()
+      })
+    },
+  }
+}
+
 function appVersionJson() {
   return {
     name: 'app-version-json',
@@ -25,8 +40,17 @@ function appVersionJson() {
 
 export default defineConfig({
   plugins: [
+    generatorRoute(),
     appVersionJson(),
     react(),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        generator: resolve(__dirname, 'generator.html'),
+      },
+    },
+  },
 })

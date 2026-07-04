@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/generator",
+      "destination": "/generator.html"
+    },
+    {
+      "source": "/generator/",
+      "destination": "/generator.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
