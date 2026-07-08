@@ -8,13 +8,23 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const appVersionFile = resolve(__dirname, 'app-version.json')
 
-function generatorRoute() {
+function htmlRoutes() {
   return {
-    name: 'generator-route',
+    name: 'html-routes',
     configureServer(server) {
       server.middlewares.use((req, _, next) => {
         if (req.url === '/generator' || req.url?.startsWith('/generator?')) {
           req.url = req.url.replace('/generator', '/generator.html')
+        }
+
+        if (
+          req.url === '/appStoreScreenshotCustomizer' ||
+          req.url?.startsWith('/appStoreScreenshotCustomizer?')
+        ) {
+          req.url = req.url.replace(
+            '/appStoreScreenshotCustomizer',
+            '/appStoreScreenshotCustomizer.html',
+          )
         }
 
         next()
@@ -40,7 +50,7 @@ function appVersionJson() {
 
 export default defineConfig({
   plugins: [
-    generatorRoute(),
+    htmlRoutes(),
     appVersionJson(),
     react(),
     tailwindcss(),
@@ -50,6 +60,10 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         generator: resolve(__dirname, 'generator.html'),
+        appStoreScreenshotCustomizer: resolve(
+          __dirname,
+          'appStoreScreenshotCustomizer.html',
+        ),
       },
     },
   },

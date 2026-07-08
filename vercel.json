@@ -9,6 +9,14 @@
       "destination": "/generator.html"
     },
     {
+      "source": "/appStoreScreenshotCustomizer",
+      "destination": "/appStoreScreenshotCustomizer.html"
+    },
+    {
+      "source": "/appStoreScreenshotCustomizer/",
+      "destination": "/appStoreScreenshotCustomizer.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
