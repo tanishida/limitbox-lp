@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AppStore Screenshot Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+      .device-mockup {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+      /* スクロールバーのカスタマイズ */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body
+    class="flex h-screen overflow-hidden bg-gray-100 font-sans text-gray-800"
+  >
+    <!-- 左側: エディタパネル -->
+    <div
+      class="z-20 flex h-full w-80 shrink-0 flex-col border-r border-gray-200 bg-white shadow-lg"
+    >
+      <div class="border-b border-gray-200 bg-gray-50 p-5">
+        <h1 class="text-lg leading-tight font-bold text-gray-800">
+          AppStore Screenshot<br /><span class="text-blue-600"
+            >Customizer Pro</span
+          >
+        </h1>
+        <p class="mt-1 text-xs text-gray-500">一括書き出し & プリセット対応</p>
+      </div>
+
+      <div class="flex-1 space-y-6 overflow-y-auto p-5">
+        <!-- 💡 NEW: プリセット管理 (ローカルストレージ) -->
+        <div class="rounded-xl border border-gray-200 bg-gray-50 p-4">
+          <label class="mb-2 block text-sm font-bold text-gray-700"
+            >設定プリセット (最大10件)</label
+          >
+          <div class="mb-2 flex gap-2">
+            <select
+              id="presetSelect"
+              class="flex-1 rounded-lg border border-gray-300 bg-white p-2 text-xs shadow-sm outline-none focus:ring-1 focus:ring-blue-500"
+            >
+              <option value="">-- 保存された設定 --</option>
+            </select>
+            <button
+              onclick="loadPreset()"
+              class="rounded-lg bg-blue-100 px-3 py-2 text-xs font-bold text-blue-700 transition hover:bg-blue-200"
+            >
+              読込
+            </button>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button
+              onclick="savePreset()"
+              class="flex-1 rounded-lg bg-green-100 px-3 py-2 text-xs font-bold text-green-700 transition hover:bg-green-200"
+            >
+              現在の設定を保存
+            </button>
+            <button
+              onclick="deletePreset()"
+              class="rounded-lg bg-red-100 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-200"
+            >
+              削除
+            </button>
+          </div>
+        </div>
+
+        <!-- テキスト設定 -->
+        <div>
+          <label class="mb-1 block text-sm font-bold text-gray-700"
+            >メインタイトル</label
+          >
+          <input
+            type="text"
+            id="titleLine1"
+            value="誰にも見られない"
+            class="mb-3 w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm shadow-sm transition outline-none focus:ring-blue-500"
+          />
+
+          <label class="mb-1 block text-sm font-bold text-gray-700"
+            >強調テキスト</label
+          >
+          <input
+            type="text"
+            id="titleHighlight"
+            value="極秘空間"
+            class="mb-2 w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm shadow-sm transition outline-none focus:ring-blue-500"
+          />
+
+          <label class="mb-1 block text-sm font-bold text-gray-700"
+            >強調テキストの色</label
+          >
+          <div class="mb-3 flex items-center gap-2">
+            <input
+              type="color"
+              id="highlightColor"
+              value="#22d3ee"
+              class="h-10 w-10 cursor-pointer rounded border-0 p-0 shadow-sm"
+            />
+            <span id="highlightColorHex" class="font-mono text-xs text-gray-500"
+              >#22D3EE</span
+            >
+          </div>
+
+          <label class="mb-1 block text-sm font-bold text-gray-700"
+            >サブタイトル</label
+          >
+          <textarea
+            id="subtitle"
+            class="w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm leading-relaxed shadow-sm transition outline-none focus:ring-blue-500"
+            rows="2"
+          >
+強固なセキュリティで
+あなたのプライバシーを完全保護</textarea
+          >
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- 背景設定 -->
+        <div>
+          <label class="mb-2 block text-sm font-bold text-gray-700"
+            >背景グラデーション</label
+          >
+          <div class="flex items-center gap-4">
+            <div class="flex-1">
+              <label class="mb-1 block text-xs text-gray-500"
+                >開始色 (上/左)</label
+              >
+              <input
+                type="color"
+                id="bgStart"
+                value="#0f172a"
+                class="h-10 w-full cursor-pointer rounded border-0 p-0 shadow-sm"
+              />
+            </div>
+            <div class="flex-1">
+              <label class="mb-1 block text-xs text-gray-500"
+                >終了色 (下/右)</label
+              >
+              <input
+                type="color"
+                id="bgEnd"
+                value="#000000"
+                class="h-10 w-full cursor-pointer rounded border-0 p-0 shadow-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- 画像アップロード -->
+        <div class="space-y-3">
+          <label class="mb-1 block text-sm font-bold text-gray-700"
+            >デバイス別スクリーンショット</label
+          >
+          <div>
+            <span class="mb-1 block text-xs text-gray-500">iPhone</span>
+            <input
+              type="file"
+              id="imageInput-iphone"
+              accept="image/*"
+              class="block w-full cursor-pointer rounded-lg border border-gray-200 bg-white text-sm text-gray-500 transition file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
+          <div>
+            <span class="mb-1 block text-xs text-gray-500">iPad</span>
+            <input
+              type="file"
+              id="imageInput-ipad"
+              accept="image/*"
+              class="block w-full cursor-pointer rounded-lg border border-gray-200 bg-white text-sm text-gray-500 transition file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
+          <div>
+            <span class="mb-1 block text-xs text-gray-500">Mac</span>
+            <input
+              type="file"
+              id="imageInput-mac"
+              accept="image/*"
+              class="block w-full cursor-pointer rounded-lg border border-gray-200 bg-white text-sm text-gray-500 transition file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- 一括書き出し設定とボタン -->
+      <div class="border-t border-gray-200 bg-white p-5">
+        <div class="mb-4">
+          <label class="mb-2 block text-sm font-bold text-gray-700"
+            >一括書き出し対象</label
+          >
+          <div class="flex gap-4">
+            <label
+              class="flex cursor-pointer items-center gap-1.5 text-sm select-none"
+            >
+              <input
+                type="checkbox"
+                id="exportIphone"
+                checked
+                class="h-4 w-4 rounded border-gray-300 text-blue-600"
+              />
+              iPhone
+            </label>
+            <label
+              class="flex cursor-pointer items-center gap-1.5 text-sm select-none"
+            >
+              <input
+                type="checkbox"
+                id="exportIpad"
+                checked
+                class="h-4 w-4 rounded border-gray-300 text-blue-600"
+              />
+              iPad
+            </label>
+            <label
+              class="flex cursor-pointer items-center gap-1.5 text-sm select-none"
+            >
+              <input
+                type="checkbox"
+                id="exportMac"
+                class="h-4 w-4 rounded border-gray-300 text-blue-600"
+              />
+              Mac
+            </label>
+          </div>
+        </div>
+
+        <button
+          id="downloadBtn"
+          onclick="downloadAll()"
+          class="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 font-bold text-white shadow-md transition duration-200 hover:bg-blue-700"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            ></path>
+          </svg>
+          選択した画像を保存
+        </button>
+      </div>
+    </div>
+
+    <!-- 右側: プレビューエリア -->
+    <div
+      id="previewWrapper"
+      class="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gray-200 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIiBmaWxsPSIjZTElZTUlZTkiLz4KPC9zdmc+')]"
+    >
+      <!-- プレビュー切り替えタブ -->
+      <div class="absolute top-6 left-0 z-10 flex w-full justify-center">
+        <div
+          class="flex gap-1 rounded-full border border-gray-200 bg-white/90 p-1 shadow-lg backdrop-blur"
+        >
+          <button
+            id="tab-iphone"
+            onclick="switchPreview('iphone')"
+            class="rounded-full bg-gray-800 px-5 py-2 text-sm font-bold text-white transition"
+          >
+            iPhone
+          </button>
+          <button
+            id="tab-ipad"
+            onclick="switchPreview('ipad')"
+            class="rounded-full bg-transparent px-5 py-2 text-sm font-bold text-gray-600 transition hover:bg-gray-100"
+          >
+            iPad
+          </button>
+          <button
+            id="tab-mac"
+            onclick="switchPreview('mac')"
+            class="rounded-full bg-transparent px-5 py-2 text-sm font-bold text-gray-600 transition hover:bg-gray-100"
+          >
+            Mac
+          </button>
+        </div>
+      </div>
+
+      <!-- 自動スケールされるコンテナ -->
+      <div
+        id="scaleContainer"
+        class="mt-10 flex items-center justify-center transition-transform duration-300"
+      >
+        <!-- JavaScriptでここにリアルタイム描画されます -->
+        <div id="previewArea"></div>
+      </div>
+
+      <!-- キャプチャ時のみ使用する隠しDOM（画質劣化を防ぐため） -->
+      <div
+        id="captureContainer"
+        class="pointer-events-none absolute top-0 -left-[9999px]"
+      ></div>
+    </div>
+
+    <script>
+      const platforms = [
+        {
+          id: 'iphone',
+          containerW: 'w-[350px]',
+          containerH: 'h-[750px]',
+          mockW: 'w-[240px]',
+          mockH: 'h-[519px]',
+          targetW: 1284,
+          targetH: 2778,
+          isLandscape: false,
+          hasNotch: true,
+        },
+        {
+          id: 'ipad',
+          containerW: 'w-[480px]',
+          containerH: 'h-[800px]',
+          mockW: 'w-[360px]',
+          mockH: 'h-[480px]',
+          targetW: 2048,
+          targetH: 2732,
+          isLandscape: false,
+          hasNotch: false,
+        },
+        {
+          id: 'mac',
+          containerW: 'w-[720px]',
+          containerH: 'h-[500px]',
+          mockW: 'w-[400px]',
+          mockH: 'h-[250px]',
+          targetW: 2560,
+          targetH: 1600,
+          isLandscape: true,
+          hasNotch: false,
+        },
+      ]
+
+      const deviceImages = { iphone: '', ipad: '', mac: '' }
+      let currentPreviewPlatform = 'iphone' // デフォルトのプレビュー
+
+      // UI要素
+      const uiElements = {
+        title1: document.getElementById('titleLine1'),
+        title2: document.getElementById('titleHighlight'),
+        hlColor: document.getElementById('highlightColor'),
+        hlColorHex: document.getElementById('highlightColorHex'),
+        subtitle: document.getElementById('subtitle'),
+        bgStart: document.getElementById('bgStart'),
+        bgEnd: document.getElementById('bgEnd'),
+        presetSelect: document.getElementById('presetSelect'),
+      }
+
+      // イベントリスナーの登録
+      Object.keys(uiElements).forEach((key) => {
+        if (key === 'presetSelect') return
+        uiElements[key].addEventListener('input', () => {
+          if (key === 'hlColor')
+            uiElements.hlColorHex.textContent =
+              uiElements.hlColor.value.toUpperCase()
+          renderPreview()
+        })
+      })
+
+      // デバイスごとの画像アップロード
+      ;['iphone', 'ipad', 'mac'].forEach((id) => {
+        document
+          .getElementById(`imageInput-${id}`)
+          .addEventListener('change', (e) => {
+            const file = e.target.files[0]
+            if (file) {
+              const reader = new FileReader()
+              reader.onload = function (event) {
+                deviceImages[id] = event.target.result
+                renderPreview()
+              }
+              reader.readAsDataURL(file)
+            }
+          })
+      })
+
+      // --- 💡 プレビューの切り替え ---
+      function switchPreview(platformId) {
+        currentPreviewPlatform = platformId
+
+        // タブのスタイル更新
+        ;['iphone', 'ipad', 'mac'].forEach((id) => {
+          const tab = document.getElementById(`tab-${id}`)
+          if (id === platformId) {
+            tab.className =
+              'px-5 py-2 rounded-full text-sm font-bold bg-gray-800 text-white transition'
+          } else {
+            tab.className =
+              'px-5 py-2 rounded-full text-sm font-bold bg-transparent text-gray-600 hover:bg-gray-100 transition'
+          }
+        })
+
+        renderPreview()
+      }
+
+      // --- 💡 プリセット管理 (localStorage) ---
+      function getPresets() {
+        try {
+          return JSON.parse(localStorage.getItem('screenshot_presets') || '[]')
+        } catch (e) {
+          return []
+        }
+      }
+
+      function updatePresetDropdown() {
+        const presets = getPresets()
+        const select = uiElements.presetSelect
+        select.innerHTML = '<option value="">-- 保存された設定 --</option>'
+        presets.forEach((p) => {
+          const option = document.createElement('option')
+          option.value = p.id
+          option.textContent = p.name
+          select.appendChild(option)
+        })
+      }
+
+      function savePreset() {
+        const presets = getPresets()
+        if (presets.length >= 10) {
+          alert(
+            '保存できる設定は最大10件までです。不要な設定を削除してください。',
+          )
+          return
+        }
+
+        const dateStr = new Date().toLocaleString('ja-JP', {
+          month: 'numeric',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+        const presetName = `${uiElements.title1.value || '無題'} (${dateStr})`
+
+        const newPreset = {
+          id: Date.now().toString(),
+          name: presetName,
+          title1: uiElements.title1.value,
+          title2: uiElements.title2.value,
+          hlColor: uiElements.hlColor.value,
+          subtitle: uiElements.subtitle.value,
+          bgStart: uiElements.bgStart.value,
+          bgEnd: uiElements.bgEnd.value,
+        }
+
+        presets.push(newPreset)
+        localStorage.setItem('screenshot_presets', JSON.stringify(presets))
+        updatePresetDropdown()
+
+        // 保存したものを選択状態にする
+        uiElements.presetSelect.value = newPreset.id
+        alert(`「${presetName}」を保存しました。`)
+      }
+
+      function loadPreset() {
+        const selectedId = uiElements.presetSelect.value
+        if (!selectedId) return
+
+        const presets = getPresets()
+        const preset = presets.find((p) => p.id === selectedId)
+        if (preset) {
+          uiElements.title1.value = preset.title1
+          uiElements.title2.value = preset.title2
+          uiElements.hlColor.value = preset.hlColor
+          uiElements.hlColorHex.textContent = preset.hlColor.toUpperCase()
+          uiElements.subtitle.value = preset.subtitle
+          uiElements.bgStart.value = preset.bgStart
+          uiElements.bgEnd.value = preset.bgEnd
+          renderPreview()
+        }
+      }
+
+      function deletePreset() {
+        const selectedId = uiElements.presetSelect.value
+        if (!selectedId) {
+          alert('削除する設定を選択してください。')
+          return
+        }
+
+        if (confirm('選択した設定を削除しますか？')) {
+          let presets = getPresets()
+          presets = presets.filter((p) => p.id !== selectedId)
+          localStorage.setItem('screenshot_presets', JSON.stringify(presets))
+          updatePresetDropdown()
+        }
+      }
+
+      // 初期化時にプリセットを読み込む
+      updatePresetDropdown()
+
+      // --- HTML生成ロジック ---
+      function generateHTML(platformId) {
+        const currentPlatform = platforms.find((p) => p.id === platformId)
+        const t1 = uiElements.title1.value
+        const t2 = uiElements.title2.value
+        const hlColor = uiElements.hlColor.value
+        const sub = uiElements.subtitle.value.replace(/\n/g, '<br>')
+        const bgStart = uiElements.bgStart.value
+        const bgEnd = uiElements.bgEnd.value
+
+        const notchHtml = currentPlatform.hasNotch
+          ? `<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[25px] bg-gray-700 rounded-b-2xl z-40"></div>`
+          : ''
+        const outerRadius =
+          currentPlatform.id === 'mac' ? 'rounded-xl' : 'rounded-[2rem]'
+        const innerRadius =
+          currentPlatform.id === 'mac' ? 'rounded-lg' : 'rounded-[1.6rem]'
+        const paddingClass =
+          currentPlatform.id === 'mac' ? 'p-[4px]' : 'p-[6px]'
+        const borderColorClass =
+          currentPlatform.id === 'mac' ? 'bg-gray-600' : 'bg-gray-700'
+
+        // 💡 そのデバイス用にアップロードされた画像を表示する
+        const imageSrc = deviceImages[platformId]
+        const imageContent = imageSrc
+          ? `<img src="${imageSrc}" class="absolute inset-0 w-full h-full object-cover z-10" />`
+          : `<div class="absolute inset-0 z-20 flex flex-col items-center justify-center">
+                    <svg class="w-16 h-16 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <p class="text-gray-500 text-sm font-bold">Image</p>
+                   </div>`
+
+        const mockInnerHtml = `
+                <div class="relative w-full h-full ${innerRadius} overflow-hidden z-10 bg-gray-800 flex flex-col items-center justify-center">
+                    ${imageContent}
+                </div>
+                ${notchHtml}
+            `
+
+        let innerContent = ''
+        if (currentPlatform.isLandscape) {
+          innerContent = `
+                    <div class="flex flex-row items-center h-full w-full">
+                        <div class="relative z-10 w-2/5 text-left pl-6">
+                            <h2 class="text-4xl font-bold text-white leading-tight mb-4">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
+                            <p class="text-gray-200 text-lg">${sub}</p>
+                        </div>
+                        <div class="w-3/5 flex justify-center items-center">
+                            <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl">
+                                ${mockInnerHtml}
+                            </div>
+                        </div>
+                    </div>
+                `
+        } else {
+          const titleSize =
+            currentPlatform.id === 'ipad' ? 'text-4xl' : 'text-3xl'
+          innerContent = `
+                    <div class="relative z-10 text-center mt-6 mb-6">
+                        <h2 class="${titleSize} font-bold text-white leading-tight mb-3">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
+                        <p class="text-gray-200 text-base">${sub}</p>
+                    </div>
+                    <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl mx-auto">
+                        ${mockInnerHtml}
+                    </div>
+                `
+        }
+
+        return `
+                <div id="captureTarget" class="${currentPlatform.containerW} ${currentPlatform.containerH} p-6 relative overflow-hidden flex ${currentPlatform.isLandscape ? '' : 'flex-col items-center'} shadow-2xl" style="background: linear-gradient(to bottom right, ${bgStart}, ${bgEnd});">
+                    ${innerContent}
+                </div>
+            `
+      }
+
+      // プレビュー描画とスケール調整
+      function renderPreview() {
+        const html = generateHTML(currentPreviewPlatform)
+        document.getElementById('previewArea').innerHTML = html
+        adjustScale()
+      }
+
+      function adjustScale() {
+        const wrapper = document.getElementById('previewWrapper')
+        const container =
+          document.getElementById('previewArea').firstElementChild
+        const scaleContainer = document.getElementById('scaleContainer')
+
+        if (!container || !wrapper) return
+
+        const padding = 100 // 余白を広めに（タブの分）
+        const availableW = wrapper.clientWidth - padding
+        const availableH = wrapper.clientHeight - padding
+
+        const scaleX = availableW / container.offsetWidth
+        const scaleY = availableH / container.offsetHeight
+        const scale = Math.min(scaleX, scaleY, 1)
+
+        scaleContainer.style.transform = `scale(${scale})`
+      }
+
+      window.addEventListener('resize', adjustScale)
+
+      // --- 💡 一括ダウンロード処理 ---
+      async function downloadAll() {
+        const platformsToExport = []
+        if (document.getElementById('exportIphone').checked)
+          platformsToExport.push('iphone')
+        if (document.getElementById('exportIpad').checked)
+          platformsToExport.push('ipad')
+        if (document.getElementById('exportMac').checked)
+          platformsToExport.push('mac')
+
+        if (platformsToExport.length === 0) {
+          alert('書き出し対象のデバイスを選択してください。')
+          return
+        }
+
+        const btn = document.getElementById('downloadBtn')
+        const originalText = btn.innerHTML
+        btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>画像を生成中...`
+        btn.disabled = true
+
+        // 各デバイスごとに順番に画像化してダウンロード
+        for (const pid of platformsToExport) {
+          await generateAndDownloadImage(pid)
+          // 複数ダウンロードがブラウザにブロックされないよう少し間隔をあける
+          await new Promise((r) => setTimeout(r, 600))
+        }
+
+        btn.innerHTML = originalText
+        btn.disabled = false
+      }
+
+      // 単一画像の生成・ダウンロードをPromise化
+      function generateAndDownloadImage(platformId) {
+        return new Promise((resolve, reject) => {
+          const currentPlatform = platforms.find((p) => p.id === platformId)
+          const captureContainer = document.getElementById('captureContainer')
+          captureContainer.innerHTML = generateHTML(platformId)
+          const target = captureContainer.firstElementChild
+
+          html2canvas(target, {
+            scale: 4,
+            backgroundColor: '#000000',
+            useCORS: true,
+          })
+            .then((canvas) => {
+              const destCanvas = document.createElement('canvas')
+              destCanvas.width = currentPlatform.targetW
+              destCanvas.height = currentPlatform.targetH
+              const ctx = destCanvas.getContext('2d')
+
+              ctx.fillStyle = '#000000'
+              ctx.fillRect(
+                0,
+                0,
+                currentPlatform.targetW,
+                currentPlatform.targetH,
+              )
+              ctx.imageSmoothingEnabled = true
+              ctx.imageSmoothingQuality = 'high'
+              ctx.drawImage(
+                canvas,
+                0,
+                0,
+                currentPlatform.targetW,
+                currentPlatform.targetH,
+              )
+
+              const link = document.createElement('a')
+              link.download = `AppStore_${platformId}.jpg`
+              link.href = destCanvas.toDataURL('image/jpeg', 1.0)
+              link.click()
+
+              captureContainer.innerHTML = ''
+              resolve()
+            })
+            .catch((err) => {
+              console.error('画像化エラー:', err)
+              captureContainer.innerHTML = ''
+              reject(err)
+            })
+        })
+      }
+
+      // 初回描画
+      renderPreview()
+    </script>
+  </body>
+</html>

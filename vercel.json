@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/generator",
+      "destination": "/generator.html"
+    },
+    {
+      "source": "/generator/",
+      "destination": "/generator.html"
+    },
+    {
+      "source": "/appStoreScreenshotCustomizer",
+      "destination": "/appStoreScreenshotCustomizer.html"
+    },
+    {
+      "source": "/appStoreScreenshotCustomizer/",
+      "destination": "/appStoreScreenshotCustomizer.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
