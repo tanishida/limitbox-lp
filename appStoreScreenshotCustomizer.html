@@ -43,7 +43,7 @@
       </div>
 
       <div class="flex-1 space-y-6 overflow-y-auto p-5">
-        <!-- 💡 NEW: プリセット管理 (ローカルストレージ) -->
+        <!-- プリセット管理 (ローカルストレージ) -->
         <div class="rounded-xl border border-gray-200 bg-gray-50 p-4">
           <label class="mb-2 block text-sm font-bold text-gray-700"
             >設定プリセット (最大10件)</label
@@ -86,7 +86,7 @@
           <input
             type="text"
             id="titleLine1"
-            value="誰にも見られない"
+            value="メインタイトル"
             class="mb-3 w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm shadow-sm transition outline-none focus:ring-blue-500"
           />
 
@@ -96,7 +96,7 @@
           <input
             type="text"
             id="titleHighlight"
-            value="極秘空間"
+            value="協調テキスト"
             class="mb-2 w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm shadow-sm transition outline-none focus:ring-blue-500"
           />
 
@@ -115,6 +115,50 @@
             >
           </div>
 
+          <!-- 文字サイズ調整スライダー -->
+          <div
+            class="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-3 shadow-sm"
+          >
+            <label class="mb-3 block text-xs font-bold text-gray-600"
+              >文字サイズ (<span id="currentDeviceLabel" class="text-blue-600"
+                >iPhone</span
+              >
+              用)</label
+            >
+            <div class="mb-3">
+              <div
+                class="mb-1 flex justify-between text-xs font-medium text-gray-500"
+              >
+                <span class="text-gray-700">タイトル</span
+                ><span id="titleSizeVal">30px</span>
+              </div>
+              <input
+                type="range"
+                id="titleSizeSlider"
+                min="20"
+                max="100"
+                value="30"
+                class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-gray-300 accent-blue-600"
+              />
+            </div>
+            <div>
+              <div
+                class="mb-1 flex justify-between text-xs font-medium text-gray-500"
+              >
+                <span class="text-gray-700">サブタイトル</span
+                ><span id="subtitleSizeVal">16px</span>
+              </div>
+              <input
+                type="range"
+                id="subtitleSizeSlider"
+                min="10"
+                max="60"
+                value="16"
+                class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-gray-300 accent-blue-600"
+              />
+            </div>
+          </div>
+
           <label class="mb-1 block text-sm font-bold text-gray-700"
             >サブタイトル</label
           >
@@ -123,9 +167,9 @@
             class="w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm leading-relaxed shadow-sm transition outline-none focus:ring-blue-500"
             rows="2"
           >
-強固なセキュリティで
-あなたのプライバシーを完全保護</textarea
-          >
+サブタイトル
+複数行のテキストも対応可能
+          </textarea>
         </div>
 
         <hr class="border-gray-200" />
@@ -351,6 +395,13 @@
       ]
 
       const deviceImages = { iphone: '', ipad: '', mac: '' }
+
+      const deviceSettings = {
+        iphone: { titleSize: 30, subtitleSize: 16 },
+        ipad: { titleSize: 36, subtitleSize: 16 },
+        mac: { titleSize: 36, subtitleSize: 18 },
+      }
+
       let currentPreviewPlatform = 'iphone' // デフォルトのプレビュー
 
       // UI要素
@@ -363,15 +414,43 @@
         bgStart: document.getElementById('bgStart'),
         bgEnd: document.getElementById('bgEnd'),
         presetSelect: document.getElementById('presetSelect'),
+
+        // 文字サイズ関連
+        titleSizeSlider: document.getElementById('titleSizeSlider'),
+        subtitleSizeSlider: document.getElementById('subtitleSizeSlider'),
+        titleSizeVal: document.getElementById('titleSizeVal'),
+        subtitleSizeVal: document.getElementById('subtitleSizeVal'),
+        currentDeviceLabel: document.getElementById('currentDeviceLabel'),
       }
 
       // イベントリスナーの登録
       Object.keys(uiElements).forEach((key) => {
-        if (key === 'presetSelect') return
+        if (
+          key === 'presetSelect' ||
+          key === 'titleSizeVal' ||
+          key === 'subtitleSizeVal' ||
+          key === 'currentDeviceLabel'
+        )
+          return
         uiElements[key].addEventListener('input', () => {
           if (key === 'hlColor')
             uiElements.hlColorHex.textContent =
               uiElements.hlColor.value.toUpperCase()
+
+          // スライダー変更時の処理
+          if (key === 'titleSizeSlider') {
+            deviceSettings[currentPreviewPlatform].titleSize =
+              uiElements.titleSizeSlider.value
+            uiElements.titleSizeVal.textContent =
+              uiElements.titleSizeSlider.value + 'px'
+          }
+          if (key === 'subtitleSizeSlider') {
+            deviceSettings[currentPreviewPlatform].subtitleSize =
+              uiElements.subtitleSizeSlider.value
+            uiElements.subtitleSizeVal.textContent =
+              uiElements.subtitleSizeSlider.value + 'px'
+          }
+
           renderPreview()
         })
       })
@@ -393,7 +472,7 @@
           })
       })
 
-      // --- 💡 プレビューの切り替え ---
+      // プレビューの切り替え
       function switchPreview(platformId) {
         currentPreviewPlatform = platformId
 
@@ -409,10 +488,20 @@
           }
         })
 
+        // 文字サイズスライダーとラベルの更新
+        const settings = deviceSettings[platformId]
+        uiElements.titleSizeSlider.value = settings.titleSize
+        uiElements.titleSizeVal.textContent = settings.titleSize + 'px'
+        uiElements.subtitleSizeSlider.value = settings.subtitleSize
+        uiElements.subtitleSizeVal.textContent = settings.subtitleSize + 'px'
+
+        const labelMap = { iphone: 'iPhone', ipad: 'iPad', mac: 'Mac' }
+        uiElements.currentDeviceLabel.textContent = labelMap[platformId]
+
         renderPreview()
       }
 
-      // --- 💡 プリセット管理 (localStorage) ---
+      // プリセット管理 (localStorage)
       function getPresets() {
         try {
           return JSON.parse(localStorage.getItem('screenshot_presets') || '[]')
@@ -459,13 +548,13 @@
           subtitle: uiElements.subtitle.value,
           bgStart: uiElements.bgStart.value,
           bgEnd: uiElements.bgEnd.value,
+          deviceSettings: JSON.parse(JSON.stringify(deviceSettings)),
         }
 
         presets.push(newPreset)
         localStorage.setItem('screenshot_presets', JSON.stringify(presets))
         updatePresetDropdown()
 
-        // 保存したものを選択状態にする
         uiElements.presetSelect.value = newPreset.id
         alert(`「${presetName}」を保存しました。`)
       }
@@ -484,6 +573,20 @@
           uiElements.subtitle.value = preset.subtitle
           uiElements.bgStart.value = preset.bgStart
           uiElements.bgEnd.value = preset.bgEnd
+
+          if (preset.deviceSettings) {
+            deviceSettings.iphone = { ...preset.deviceSettings.iphone }
+            deviceSettings.ipad = { ...preset.deviceSettings.ipad }
+            deviceSettings.mac = { ...preset.deviceSettings.mac }
+          }
+
+          // スライダーの表示更新
+          const settings = deviceSettings[currentPreviewPlatform]
+          uiElements.titleSizeSlider.value = settings.titleSize
+          uiElements.titleSizeVal.textContent = settings.titleSize + 'px'
+          uiElements.subtitleSizeSlider.value = settings.subtitleSize
+          uiElements.subtitleSizeVal.textContent = settings.subtitleSize + 'px'
+
           renderPreview()
         }
       }
@@ -503,10 +606,9 @@
         }
       }
 
-      // 初期化時にプリセットを読み込む
       updatePresetDropdown()
 
-      // --- HTML生成ロジック ---
+      // HTML生成ロジック
       function generateHTML(platformId) {
         const currentPlatform = platforms.find((p) => p.id === platformId)
         const t1 = uiElements.title1.value
@@ -515,6 +617,9 @@
         const sub = uiElements.subtitle.value.replace(/\n/g, '<br>')
         const bgStart = uiElements.bgStart.value
         const bgEnd = uiElements.bgEnd.value
+
+        const titleFontSize = deviceSettings[platformId].titleSize
+        const subtitleFontSize = deviceSettings[platformId].subtitleSize
 
         const notchHtml = currentPlatform.hasNotch
           ? `<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[25px] bg-gray-700 rounded-b-2xl z-40"></div>`
@@ -528,7 +633,6 @@
         const borderColorClass =
           currentPlatform.id === 'mac' ? 'bg-gray-600' : 'bg-gray-700'
 
-        // 💡 そのデバイス用にアップロードされた画像を表示する
         const imageSrc = deviceImages[platformId]
         const imageContent = imageSrc
           ? `<img src="${imageSrc}" class="absolute inset-0 w-full h-full object-cover z-10" />`
@@ -549,25 +653,25 @@
           innerContent = `
                     <div class="flex flex-row items-center h-full w-full">
                         <div class="relative z-10 w-2/5 text-left pl-6">
-                            <h2 class="text-4xl font-bold text-white leading-tight mb-4">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
-                            <p class="text-gray-200 text-lg">${sub}</p>
+                            <h2 class="font-bold text-white leading-tight mb-4" style="font-size: ${titleFontSize}px">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
+                            <p class="text-gray-200" style="font-size: ${subtitleFontSize}px; line-height: 1.5;">${sub}</p>
                         </div>
                         <div class="w-3/5 flex justify-center items-center">
-                            <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl">
+                            <!-- 💡 shrink-0 を追加してモックアップのサイズが縮むのを防止 -->
+                            <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl shrink-0">
                                 ${mockInnerHtml}
                             </div>
                         </div>
                     </div>
                 `
         } else {
-          const titleSize =
-            currentPlatform.id === 'ipad' ? 'text-4xl' : 'text-3xl'
           innerContent = `
                     <div class="relative z-10 text-center mt-6 mb-6">
-                        <h2 class="${titleSize} font-bold text-white leading-tight mb-3">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
-                        <p class="text-gray-200 text-base">${sub}</p>
+                        <h2 class="font-bold text-white leading-tight mb-3" style="font-size: ${titleFontSize}px">${t1}<br><span style="color: ${hlColor}">${t2}</span></h2>
+                        <p class="text-gray-200" style="font-size: ${subtitleFontSize}px; line-height: 1.5;">${sub}</p>
                     </div>
-                    <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl mx-auto">
+                    <!-- 💡 shrink-0 を追加してモックアップのサイズが縮むのを防止 -->
+                    <div class="relative ${currentPlatform.mockW} ${currentPlatform.mockH} ${borderColorClass} ${paddingClass} ${outerRadius} device-mockup shadow-2xl mx-auto shrink-0">
                         ${mockInnerHtml}
                     </div>
                 `
@@ -595,7 +699,7 @@
 
         if (!container || !wrapper) return
 
-        const padding = 100 // 余白を広めに（タブの分）
+        const padding = 100
         const availableW = wrapper.clientWidth - padding
         const availableH = wrapper.clientHeight - padding
 
@@ -608,7 +712,7 @@
 
       window.addEventListener('resize', adjustScale)
 
-      // --- 💡 一括ダウンロード処理 ---
+      // 一括ダウンロード処理
       async function downloadAll() {
         const platformsToExport = []
         if (document.getElementById('exportIphone').checked)
@@ -628,10 +732,8 @@
         btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>画像を生成中...`
         btn.disabled = true
 
-        // 各デバイスごとに順番に画像化してダウンロード
         for (const pid of platformsToExport) {
           await generateAndDownloadImage(pid)
-          // 複数ダウンロードがブラウザにブロックされないよう少し間隔をあける
           await new Promise((r) => setTimeout(r, 600))
         }
 
@@ -691,7 +793,6 @@
         })
       }
 
-      // 初回描画
       renderPreview()
     </script>
   </body>
