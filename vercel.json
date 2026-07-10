@@ -17,6 +17,10 @@
       "destination": "/appStoreScreenshotCustomizer.html"
     },
     {
+      "source": "/appStoreScreenshotSplitter/",
+      "destination": "/appStoreScreenshotSplitter.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

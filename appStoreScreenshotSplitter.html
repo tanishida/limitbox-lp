@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AppStore Screenshot Splitter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* スクロールバーのカスタマイズ */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body
+    class="flex h-screen overflow-hidden bg-gray-100 font-sans text-gray-800"
+  >
+    <!-- 左側: エディタパネル -->
+    <div
+      class="z-20 flex h-full w-80 shrink-0 flex-col border-r border-gray-200 bg-white shadow-lg"
+    >
+      <div class="border-b border-gray-200 bg-gray-50 p-5">
+        <h1 class="text-lg leading-tight font-bold text-gray-800">
+          AppStore Screenshot<br /><span class="text-indigo-600">Splitter</span>
+        </h1>
+        <p class="mt-1 text-xs text-gray-500">パノラマ画像の自動分割・最適化</p>
+      </div>
+
+      <div class="flex-1 space-y-6 overflow-y-auto p-5">
+        <!-- 画像アップロード -->
+        <div>
+          <label class="mb-2 block text-sm font-bold text-gray-700"
+            >1. 画像を読み込む</label
+          >
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            class="block w-full cursor-pointer rounded-lg border border-gray-200 bg-white text-sm text-gray-500 transition file:mr-3 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100"
+          />
+          <p class="mt-2 text-xs text-gray-500">
+            Macサイズの横長スクリーンショット（2560×1600など）を推奨します。
+          </p>
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- デバイス選択 -->
+        <div>
+          <label class="mb-3 block text-sm font-bold text-gray-700"
+            >2. ターゲットデバイス</label
+          >
+          <div class="flex flex-col gap-3">
+            <label
+              class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3 transition hover:bg-gray-50 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50"
+            >
+              <input
+                type="radio"
+                name="deviceMode"
+                value="iphone"
+                class="h-4 w-4 text-indigo-600"
+                checked
+                onchange="updatePreview()"
+              />
+              <div>
+                <div class="text-sm font-bold text-gray-800">
+                  iPhone (3分割)
+                </div>
+                <div class="text-xs text-gray-500">
+                  1284 × 2778 の画像を 3枚 出力
+                </div>
+              </div>
+            </label>
+            <label
+              class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3 transition hover:bg-gray-50 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50"
+            >
+              <input
+                type="radio"
+                name="deviceMode"
+                value="ipad"
+                class="h-4 w-4 text-indigo-600"
+                onchange="updatePreview()"
+              />
+              <div>
+                <div class="text-sm font-bold text-gray-800">iPad (2分割)</div>
+                <div class="text-xs text-gray-500">
+                  2048 × 2732 の画像を 2枚 出力
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ダウンロードボタン -->
+      <div class="border-t border-gray-200 bg-white p-5">
+        <button
+          id="downloadBtn"
+          onclick="downloadSplit()"
+          class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3.5 font-bold text-white shadow-md transition duration-200 hover:bg-indigo-700"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            ></path>
+          </svg>
+          分割して保存する
+        </button>
+      </div>
+    </div>
+
+    <!-- 右側: プレビューエリア -->
+    <div
+      class="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gray-200 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIiBmaWxsPSIjZTElZTUlZTkiLz4KPC9zdmc+')] p-10"
+    >
+      <div
+        id="previewContainer"
+        class="relative mx-auto w-full max-w-4xl overflow-hidden rounded-xl bg-white shadow-2xl transition-all duration-300"
+        style="aspect-ratio: 1.3866"
+      >
+        <img id="previewImg" class="hidden h-full w-full object-cover" />
+        <!-- 分割線を描画するコンテナ -->
+        <div
+          id="linesContainer"
+          class="pointer-events-none absolute inset-0"
+        ></div>
+
+        <!-- 初期プレースホルダー -->
+        <div
+          id="placeholder"
+          class="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-400"
+        >
+          <svg
+            class="mb-3 h-16 w-16"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          <span class="font-bold">Macの横長画像をアップロードしてください</span>
+        </div>
+      </div>
+
+      <p
+        class="mt-6 text-sm font-bold text-gray-500 shadow-white drop-shadow-md"
+      >
+        ※ プレビューの赤い線が画像の分割位置になります。
+      </p>
+    </div>
+
+    <script>
+      // デバイスごとの設定（解像度と出力枚数）
+      const configs = {
+        iphone: {
+          count: 3,
+          itemW: 1284,
+          itemH: 2778,
+          aspect: (1284 * 3) / 2778,
+        },
+        ipad: { count: 2, itemW: 2048, itemH: 2732, aspect: (2048 * 2) / 2732 },
+      }
+
+      let currentImage = null
+
+      // 画像の読み込み処理
+      document
+        .getElementById('imageInput')
+        .addEventListener('change', function (e) {
+          const file = e.target.files[0]
+          if (!file) return
+
+          const reader = new FileReader()
+          reader.onload = function (event) {
+            const img = new Image()
+            img.onload = function () {
+              currentImage = img
+              const previewImg = document.getElementById('previewImg')
+              previewImg.src = img.src
+              previewImg.classList.remove('hidden')
+              document.getElementById('placeholder').classList.add('hidden')
+              updatePreview()
+            }
+            img.src = event.target.result
+          }
+          reader.readAsDataURL(file)
+        })
+
+      // プレビュー表示の更新（アスペクト比と分割線）
+      function updatePreview() {
+        const mode = document.querySelector(
+          'input[name="deviceMode"]:checked',
+        ).value
+        const config = configs[mode]
+
+        // アスペクト比の更新
+        const container = document.getElementById('previewContainer')
+        container.style.aspectRatio = config.aspect
+
+        // 分割線の再描画
+        const linesContainer = document.getElementById('linesContainer')
+        linesContainer.innerHTML = ''
+
+        for (let i = 1; i < config.count; i++) {
+          const line = document.createElement('div')
+          // 赤い半透明の線で分割位置を示す
+          line.className =
+            'absolute top-0 bottom-0 bg-red-500/60 w-1 shadow-[0_0_8px_rgba(239,68,68,0.8)] z-10'
+          line.style.left = `${(i / config.count) * 100}%`
+          line.style.transform = 'translateX(-50%)'
+          linesContainer.appendChild(line)
+        }
+      }
+
+      // Aspect Fill (cover) でCanvasに画像を描画するヘルパー関数
+      function drawImageAspectFill(ctx, img, x, y, w, h, offsetX, offsetY) {
+        offsetX = typeof offsetX === 'number' ? offsetX : 0.5
+        offsetY = typeof offsetY === 'number' ? offsetY : 0.5
+
+        if (offsetX < 0) offsetX = 0
+        if (offsetY < 0) offsetY = 0
+        if (offsetX > 1) offsetX = 1
+        if (offsetY > 1) offsetY = 1
+
+        var iw = img.width,
+          ih = img.height,
+          r = Math.min(w / iw, h / ih),
+          nw = iw * r,
+          nh = ih * r,
+          cx,
+          cy,
+          cw,
+          ch,
+          ar = 1
+
+        if (nw < w) ar = w / nw
+        if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh
+        nw *= ar
+        nh *= ar
+
+        cw = iw / (nw / w)
+        ch = ih / (nh / h)
+        cx = (iw - cw) * offsetX
+        cy = (ih - ch) * offsetY
+
+        if (cx < 0) cx = 0
+        if (cy < 0) cy = 0
+        if (cw > iw) cw = iw
+        if (ch > ih) ch = ih
+
+        ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h)
+      }
+
+      // 分割＆ダウンロード処理
+      async function downloadSplit() {
+        if (!currentImage) {
+          alert('まずは画像を読み込んでください。')
+          return
+        }
+
+        const mode = document.querySelector(
+          'input[name="deviceMode"]:checked',
+        ).value
+        const config = configs[mode]
+
+        // 結合状態の全体サイズ
+        const totalW = config.itemW * config.count
+        const totalH = config.itemH
+
+        // 1. 全体サイズのCanvasを作成し、画像をAspect Fillで描画
+        const baseCanvas = document.createElement('canvas')
+        baseCanvas.width = totalW
+        baseCanvas.height = totalH
+        const baseCtx = baseCanvas.getContext('2d')
+
+        // 背景を白で塗りつぶす（透過画像対策）
+        baseCtx.fillStyle = '#FFFFFF'
+        baseCtx.fillRect(0, 0, totalW, totalH)
+
+        // 中央基準で画像をトリミングして描画
+        drawImageAspectFill(
+          baseCtx,
+          currentImage,
+          0,
+          0,
+          totalW,
+          totalH,
+          0.5,
+          0.5,
+        )
+
+        // UIのボタン状態を更新
+        const btn = document.getElementById('downloadBtn')
+        const originalText = btn.innerHTML
+        btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 処理中...`
+        btn.disabled = true
+
+        // 2. 指定の数だけ分割して個別にダウンロード
+        for (let i = 0; i < config.count; i++) {
+          const splitCanvas = document.createElement('canvas')
+          splitCanvas.width = config.itemW
+          splitCanvas.height = config.itemH
+          const sCtx = splitCanvas.getContext('2d')
+
+          // ベースのCanvasから必要な部分だけを切り取って描画
+          sCtx.drawImage(
+            baseCanvas,
+            i * config.itemW,
+            0,
+            config.itemW,
+            config.itemH,
+            0,
+            0,
+            config.itemW,
+            config.itemH,
+          )
+
+          // 最高画質のJPEGとして出力
+          const dataUrl = splitCanvas.toDataURL('image/jpeg', 1.0)
+          const link = document.createElement('a')
+          link.download = `Split_${mode}_Part${i + 1}.jpg`
+          link.href = dataUrl
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+
+          // ブラウザの連続ダウンロードブロックを回避するために少し待機
+          await new Promise((r) => setTimeout(r, 400))
+        }
+
+        btn.innerHTML = originalText
+        btn.disabled = false
+      }
+
+      // 初期化
+      updatePreview()
+    </script>
+  </body>
+</html>
