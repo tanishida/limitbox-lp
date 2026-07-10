@@ -27,6 +27,16 @@ function htmlRoutes() {
           )
         }
 
+        if (
+          req.url === '/appStoreScreenshotSplitter' ||
+          req.url?.startsWith('/appStoreScreenshotSplitter?')
+        ) {
+          req.url = req.url.replace(
+            '/appStoreScreenshotSplitter',
+            '/appStoreScreenshotSplitter.html',
+          )
+        }
+
         next()
       })
     },
@@ -49,12 +59,7 @@ function appVersionJson() {
 }
 
 export default defineConfig({
-  plugins: [
-    htmlRoutes(),
-    appVersionJson(),
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [htmlRoutes(), appVersionJson(), react(), tailwindcss()],
   build: {
     rollupOptions: {
       input: {
