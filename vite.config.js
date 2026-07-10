@@ -69,6 +69,10 @@ export default defineConfig({
           __dirname,
           'appStoreScreenshotCustomizer.html',
         ),
+        appStoreScreenshotSplitter: resolve(
+          __dirname,
+          'appStoreScreenshotSplitter.html',
+        ),
       },
     },
   },
