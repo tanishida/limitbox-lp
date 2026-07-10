@@ -100,6 +100,51 @@
             </label>
           </div>
         </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- 💡 NEW: 画像の配置方法 -->
+        <div>
+          <label class="mb-3 block text-sm font-bold text-gray-700"
+            >3. 画像の配置方法</label
+          >
+          <div class="flex flex-col gap-3">
+            <select
+              id="fitMode"
+              onchange="updatePreview()"
+              class="w-full cursor-pointer rounded-lg border border-gray-300 bg-white p-2.5 text-sm shadow-sm transition outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            >
+              <option value="fit" selected>
+                全体を収める (Aspect Fit) - 端が切れない
+              </option>
+              <option value="stretch">
+                引き伸ばす (Stretch) - 少し歪むが余白なし
+              </option>
+              <option value="cover">
+                切り取って埋める (Aspect Fill) - 端が切れる場合あり
+              </option>
+            </select>
+
+            <div id="bgColorContainer" class="mt-2">
+              <label class="mb-1 block text-xs text-gray-500"
+                >余白の背景色</label
+              >
+              <div class="flex items-center gap-2">
+                <!-- デフォルトはアップロード画像の背景に馴染む暗いネイビー系 -->
+                <input
+                  type="color"
+                  id="bgColor"
+                  value="#050814"
+                  onchange="updatePreview()"
+                  class="h-10 w-10 cursor-pointer rounded border-0 p-0 shadow-sm"
+                />
+                <span class="text-xs text-gray-500"
+                  >※ Aspect Fit時の隙間を埋める色</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ダウンロードボタン -->
@@ -136,7 +181,7 @@
         class="relative mx-auto w-full max-w-4xl overflow-hidden rounded-xl bg-white shadow-2xl transition-all duration-300"
         style="aspect-ratio: 1.3866"
       >
-        <img id="previewImg" class="hidden h-full w-full object-cover" />
+        <img id="previewImg" class="hidden h-full w-full object-contain" />
         <!-- 分割線を描画するコンテナ -->
         <div
           id="linesContainer"
@@ -209,7 +254,7 @@
           reader.readAsDataURL(file)
         })
 
-      // プレビュー表示の更新（アスペクト比と分割線）
+      // プレビュー表示の更新（アスペクト比と分割線、配置方法の反映）
       function updatePreview() {
         const mode = document.querySelector(
           'input[name="deviceMode"]:checked',
@@ -220,13 +265,39 @@
         const container = document.getElementById('previewContainer')
         container.style.aspectRatio = config.aspect
 
+        // 💡 配置方法のUI反映
+        const fitMode = document.getElementById('fitMode').value
+        const previewImg = document.getElementById('previewImg')
+        const bgColorContainer = document.getElementById('bgColorContainer')
+        const bgColor = document.getElementById('bgColor').value
+
+        // 一旦クラスをリセット
+        previewImg.classList.remove(
+          'object-cover',
+          'object-contain',
+          'object-fill',
+        )
+
+        if (fitMode === 'fit') {
+          previewImg.classList.add('object-contain')
+          bgColorContainer.classList.remove('hidden')
+          container.style.backgroundColor = bgColor
+        } else if (fitMode === 'stretch') {
+          previewImg.classList.add('object-fill')
+          bgColorContainer.classList.add('hidden')
+          container.style.backgroundColor = 'transparent'
+        } else {
+          previewImg.classList.add('object-cover')
+          bgColorContainer.classList.add('hidden')
+          container.style.backgroundColor = 'transparent'
+        }
+
         // 分割線の再描画
         const linesContainer = document.getElementById('linesContainer')
         linesContainer.innerHTML = ''
 
         for (let i = 1; i < config.count; i++) {
           const line = document.createElement('div')
-          // 赤い半透明の線で分割位置を示す
           line.className =
             'absolute top-0 bottom-0 bg-red-500/60 w-1 shadow-[0_0_8px_rgba(239,68,68,0.8)] z-10'
           line.style.left = `${(i / config.count) * 100}%`
@@ -274,6 +345,18 @@
         ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h)
       }
 
+      // 💡 NEW: Aspect Fit (contain) でCanvasに画像を描画するヘルパー関数
+      function drawImageAspectFit(ctx, img, x, y, w, h) {
+        const iw = img.width
+        const ih = img.height
+        const r = Math.min(w / iw, h / ih)
+        const nw = iw * r
+        const nh = ih * r
+        const cx = (w - nw) / 2 + x
+        const cy = (h - nh) / 2 + y
+        ctx.drawImage(img, cx, cy, nw, nh)
+      }
+
       // 分割＆ダウンロード処理
       async function downloadSplit() {
         if (!currentImage) {
@@ -285,32 +368,40 @@
           'input[name="deviceMode"]:checked',
         ).value
         const config = configs[mode]
+        const fitMode = document.getElementById('fitMode').value
+        const bgColor = document.getElementById('bgColor').value
 
         // 結合状態の全体サイズ
         const totalW = config.itemW * config.count
         const totalH = config.itemH
 
-        // 1. 全体サイズのCanvasを作成し、画像をAspect Fillで描画
+        // 1. 全体サイズのCanvasを作成し、指定の配置方法で描画
         const baseCanvas = document.createElement('canvas')
         baseCanvas.width = totalW
         baseCanvas.height = totalH
         const baseCtx = baseCanvas.getContext('2d')
 
-        // 背景を白で塗りつぶす（透過画像対策）
-        baseCtx.fillStyle = '#FFFFFF'
+        // 背景を塗りつぶす（Fit時の余白、または透過画像対策）
+        baseCtx.fillStyle = fitMode === 'fit' ? bgColor : '#FFFFFF'
         baseCtx.fillRect(0, 0, totalW, totalH)
 
-        // 中央基準で画像をトリミングして描画
-        drawImageAspectFill(
-          baseCtx,
-          currentImage,
-          0,
-          0,
-          totalW,
-          totalH,
-          0.5,
-          0.5,
-        )
+        // 配置方法に応じて描画
+        if (fitMode === 'fit') {
+          drawImageAspectFit(baseCtx, currentImage, 0, 0, totalW, totalH)
+        } else if (fitMode === 'stretch') {
+          baseCtx.drawImage(currentImage, 0, 0, totalW, totalH)
+        } else {
+          drawImageAspectFill(
+            baseCtx,
+            currentImage,
+            0,
+            0,
+            totalW,
+            totalH,
+            0.5,
+            0.5,
+          )
+        }
 
         // UIのボタン状態を更新
         const btn = document.getElementById('downloadBtn')
