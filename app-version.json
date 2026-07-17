@@ -3,5 +3,9 @@
   "latestVersion": "1.7.3",
   "forceUpdate": false,
   "message": "最新版にアップデートしてください。\nPlease update to the latest version.",
-  "storeURL": "https://apps.apple.com/us/app/limitbox/id6762798328"
+  "storeURL": "https://apps.apple.com/us/app/limitbox/id6762798328",
+  "importantNotification": {
+    "targetVersion": "1.7.4",
+    "message": "【重要】緊急データ消去機能を追加しました。\nFace IDまたはパスコードの解除ボタンを3秒間長押しすると、この端末のLimitBoxに保存されているすべてのファイルが完全に消去されます。この操作は取り消せません。誤って長押ししないようご注意ください。\n\n[Important] Emergency Data Erase is now available.\nPress and hold the Face ID or passcode unlock button for 3 seconds to permanently erase all files stored in LimitBox on this device. This action cannot be undone. Please take care not to activate it accidentally."
+  }
 }
