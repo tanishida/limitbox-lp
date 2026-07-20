@@ -57,7 +57,17 @@ const resources = {
           ],
         },
         art5: {
-          title: '第5条（免責事項）',
+          title: '第5条（有料プランおよびサブスクリプション）',
+          list: [
+            '本アプリでは、Pro機能を利用するための買い切りプランおよび1か月単位の自動更新サブスクリプションを、Appleのアプリ内課金を通じて提供します。価格、期間その他の条件は、購入確認時にApp Store上で表示される内容に従います。',
+            'サブスクリプションは、ユーザーが解約しない限り1か月ごとに自動更新されます。解約および契約状況の確認は、ユーザー自身のApple Accountのサブスクリプション管理画面から行うものとし、解約後も現在の契約期間が終了するまではPro機能を利用できます。',
+            '買い切りプランは、一度の購入でPro機能を継続して利用できる非消耗型のアプリ内課金です。買い切りプランを購入済みのユーザーが、サブスクリプションの導入によってその利用権を失うことはありません。',
+            '購入済みの利用権は、購入時と同じApple Accountを使用している対応端末で復元できます。利用可能な端末、請求、更新、解約および返金にはAppleの定める条件が適用され、返金の申請はApple所定の方法で行うものとします。',
+            'サブスクリプションの有効期間が満了し、または購入が取り消された場合、有効な買い切りプラン等の利用権が別に存在しない限り、Pro機能へのアクセスは終了します。ただし、これにより本アプリ内に保存済みのユーザーファイルが自動的に削除されることはありません。',
+          ],
+        },
+        art6: {
+          title: '第6条（免責事項）',
           list: [
             '開発者は、本アプリに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを明示的にも黙示的にも保証しておりません。',
             '【P2P通信に関する免責】本アプリが提供するファイル転送は、P2P（Peer-to-Peer）通信によるユーザー間の直接送受信です。送信先の誤指定、転送先での情報漏洩、ネットワーク環境に起因する通信の失敗等について、開発者は一切の責任を負わず、すべてユーザーの自己責任において行われるものとします。',
@@ -66,8 +76,8 @@ const resources = {
             '開発者は、本アプリの利用または利用不能に起因してユーザーに生じたあらゆる損害（デバイスの紛失・故障に伴うデータ喪失を含みますがこれらに限られません）について、一切の責任を負いません。',
           ],
         },
-        art6: {
-          title: '第6条（禁止事項）',
+        art7: {
+          title: '第7条（禁止事項）',
           desc: 'ユーザーは、本アプリの利用にあたり、以下の行為をしてはなりません。',
           list: [
             '法令または公序良俗に違反する行為',
@@ -76,28 +86,28 @@ const resources = {
             'その他、開発者が不適切と判断する行為',
           ],
         },
-        art7: {
-          title: '第7条（利用規約の変更）',
+        art8: {
+          title: '第8条（利用規約の変更）',
           desc: '開発者は、必要と判断した場合には、ユーザーに通知することなくいつでも本規約を変更することができるものとします。変更後の利用規約は、本アプリ内または関連するウェブサイトに掲示された時点から効力を生じるものとします。',
         },
-        art8: {
-          title: '第8条（準拠法・裁判管轄）',
+        art9: {
+          title: '第9条（準拠法・裁判管轄）',
           list: [
             '本規約の解釈にあたっては、日本法を準拠法とします。',
             '本アプリに関して紛争が生じた場合には、横浜地方裁判所を第一審の専属的合意管轄とします。',
           ],
         },
         supplement: '附則',
-        date: '2026年4月26日 制定',
+        date: '2026年4月26日 制定 / 2026年7月20日 改定',
       },
       privacy: {
         backToTop: 'トップページに戻る',
         title: 'プライバシーポリシー',
-        docId: 'LB-PP-002',
+        docId: 'LB-PP-003',
         sections: [
           {
-            title: '1. 基本方針（情報の非収集）',
-            desc: '本アプリ「LimitBox」は、ユーザーの絶対的なプライバシー保護を最優先事項として設計された、完全ローカル動作型のファイル管理アプリケーションです。開発者がユーザーの保存データ（写真、動画、ファイル等）やロック解除のためのパスコードを外部サーバーへ送信、収集、閲覧、または第三者へ提供することは、物理的・技術的に一切不可能な仕様となっています。',
+            title: '1. 基本方針（保存データ等の非収集）',
+            desc: '本アプリ「LimitBox」は、ユーザーのプライバシー保護を最優先事項として設計された、ローカル動作型のファイル管理アプリケーションです。開発者がユーザーの保存データ（写真、動画、ファイル等）やロック解除のためのパスコードを外部サーバーへ送信、収集、閲覧、または第三者へ提供することはありません。P2P通信およびアプリ内課金に伴う情報の取り扱いは、以下の各項に記載します。',
           },
           {
             title: '2. デバイス内で完結する処理について',
@@ -108,19 +118,23 @@ const resources = {
             desc: '本アプリは、デバイス間で直接ファイルを送受信するP2P（Peer-to-Peer）機能を提供しています。この機能の性質上、以下の通信処理が行われます。\n\n・接続を確立するため、一時的に中継サーバー（シグナリングサーバーおよびSTUN/TURNサーバー）を経由して通信のルーティング（IPアドレスの交換等）が行われます。\n・これらのサーバーは通信の「通り道」としてのみ機能し、通信ログ、IPアドレス、または送受信されるファイルデータをサーバー上に記録・保存することは一切ありません。\n・送受信されるファイルはすべて強力なエンドツーエンド暗号化（E2EE）によって保護されており、開発者や中継サーバーの管理者が中身を解読することは不可能です。',
           },
           {
-            title: '4. アナリティクスおよび広告について',
+            title: '4. アプリ内課金に関する情報の取り扱い',
+            desc: '本アプリは、買い切りプランおよび自動更新サブスクリプションの購入、復元ならびに利用権の確認にAppleのStoreKitを使用します。決済およびApple Accountに関する情報はAppleによって処理され、本アプリおよび開発者がクレジットカード番号その他の支払情報を取得または保存することはありません。\n\n本アプリは、Pro機能の利用可否を判定するため、StoreKitから商品識別子、購入の検証結果、サブスクリプションの有効期限、取消状態等の購入・利用権情報を端末上で取得します。これらの情報を開発者のサーバーへ送信または保存することはありません。Appleによる情報の取り扱いには、Appleのプライバシーポリシーが適用されます。',
+          },
+          {
+            title: '5. アナリティクスおよび広告について',
             desc: '現在、本アプリはユーザーの行動履歴を追跡する解析ツール（アナリティクス）や、第三者の広告配信システム（SDK）を一切組み込んでおりません。将来的にこれらを導入する場合は、事前に本ポリシーを更新し、ユーザーに通知します。',
           },
           {
-            title: '5. 免責事項',
+            title: '6. 免責事項',
             desc: '本アプリ内に保存されたデータは、ユーザー自身の責任において管理されるものとします。パスコードの忘失、自爆タイマーの作動、またはデバイスの紛失・故障に伴うデータの消失について、開発者はいかなる方法を用いてもデータの復元や救出を行うことはできず、一切の責任を負いません。',
           },
           {
-            title: '6. お問い合わせ先',
+            title: '7. お問い合わせ先',
             desc: '本ポリシーに関するご質問やお問い合わせは、アプリ内の設定画面に記載されている連絡先までお願いいたします。',
           },
         ],
-        date: '2026年5月9日 改定',
+        date: '2026年7月20日 改定',
       },
       cta: {
         title: 'あなたの秘密を、今すぐロック。',
@@ -277,7 +291,17 @@ const resources = {
           ],
         },
         art5: {
-          title: 'Article 5 (Disclaimer)',
+          title: 'Article 5 (Paid Plans and Subscriptions)',
+          list: [
+            'The App offers a one-time purchase plan and a one-month auto-renewable subscription for access to Pro features through Apple In-App Purchase. The price, duration, and other conditions are those displayed by the App Store when the purchase is confirmed.',
+            "The subscription automatically renews every month unless canceled by the user. Users are responsible for reviewing and canceling their subscription through the subscription management page for their Apple Account. Pro features remain available until the end of the current subscription period after cancellation.",
+            'The one-time purchase is a non-consumable In-App Purchase that provides continued access to Pro features. Users who purchased the one-time plan will not lose that entitlement due to the introduction of the subscription plan.',
+            "Purchased entitlements can be restored on supported devices using the same Apple Account used for the purchase. Apple's terms apply to device availability, billing, renewal, cancellation, and refunds, and refund requests must be submitted through the method provided by Apple.",
+            'When a subscription expires or a purchase is revoked, access to Pro features ends unless another valid entitlement, such as the one-time purchase plan, remains active. This does not automatically delete user files already stored in the App.',
+          ],
+        },
+        art6: {
+          title: 'Article 6 (Disclaimer)',
           list: [
             'The Developer does not expressly or impliedly guarantee that the App is free from de facto or legal defects (including flaws, errors, bugs, or infringements of rights relating to safety, reliability, accuracy, completeness, effectiveness, fitness for a particular purpose, security, etc.).',
             "[Disclaimer regarding P2P Communication] The file transfer provided by the App is a direct transmission between users via P2P (Peer-to-Peer) communication. The Developer assumes no responsibility for any erroneous designation of recipients, information leaks at the transfer destination, or communication failures caused by the network environment. All transfers are conducted entirely at the user's own risk.",
@@ -286,8 +310,8 @@ const resources = {
             'The Developer shall not be liable for any damages (including but not limited to data loss due to device loss or malfunction) incurred by the user arising from the use or inability to use the App.',
           ],
         },
-        art6: {
-          title: 'Article 6 (Prohibitions)',
+        art7: {
+          title: 'Article 7 (Prohibitions)',
           desc: 'When using the App, the user must not engage in the following acts:',
           list: [
             'Acts that violate laws and regulations or public order and morals.',
@@ -296,28 +320,28 @@ const resources = {
             'Other acts that the Developer deems inappropriate.',
           ],
         },
-        art7: {
-          title: 'Article 7 (Modification of Terms)',
+        art8: {
+          title: 'Article 8 (Modification of Terms)',
           desc: 'The Developer may change these Terms at any time without notifying the user if deemed necessary. The modified Terms shall become effective from the time they are posted within the App or on the related website.',
         },
-        art8: {
-          title: 'Article 8 (Governing Law and Jurisdiction)',
+        art9: {
+          title: 'Article 9 (Governing Law and Jurisdiction)',
           list: [
             'These Terms shall be governed by and construed in accordance with the laws of Japan.',
             'In the event of any dispute regarding the App, the Yokohama District Court shall have exclusive jurisdiction as the court of first instance.',
           ],
         },
         supplement: 'Supplementary Provision',
-        date: 'Established on April 26, 2026',
+        date: 'Established on April 26, 2026 / Revised on July 20, 2026',
       },
       privacy: {
         backToTop: 'Back to Top',
         title: 'Privacy Policy',
-        docId: 'LB-PP-002',
+        docId: 'LB-PP-003',
         sections: [
           {
-            title: '1. Basic Policy (No Data Collection)',
-            desc: 'LimitBox is a fully local file management application designed with your absolute privacy as the top priority. It is physically and technically impossible for the developer to transmit, collect, view, or share your stored data (photos, videos, files, etc.) or your unlock passcode to any external server or third party.',
+            title: '1. Basic Policy (No Collection of Stored Data)',
+            desc: 'LimitBox is a locally operated file management application designed with user privacy as a top priority. The Developer does not transmit, collect, view, or provide to third parties the data stored by users in the App (including photos, videos, and files) or their unlock passcodes. The handling of information associated with P2P communication and In-App Purchase is described below.',
           },
           {
             title: '2. Local Device Processing',
@@ -328,19 +352,23 @@ const resources = {
             desc: 'This app provides a P2P (Peer-to-Peer) file transfer feature that allows direct sending and receiving of files between devices. Due to the nature of this feature, the following communication processes occur:\n\n- To establish a connection, communication routing (such as exchanging IP addresses) is temporarily processed via relay servers (Signaling servers and STUN/TURN servers).\n- These servers function strictly as a "passageway." They absolutely do not record or store communication logs, IP addresses, or the transferred file data.\n- All transferred files are protected by strong End-to-End Encryption (E2EE), making it technically impossible for the developer or relay server administrators to decrypt the contents.',
           },
           {
-            title: '4. Analytics and Advertising',
+            title: '4. Handling of In-App Purchase Information',
+            desc: "The App uses Apple's StoreKit to purchase and restore the one-time purchase plan and auto-renewable subscription and to verify entitlements. Payment and Apple Account information is processed by Apple. Neither the App nor the Developer obtains or stores credit card numbers or other payment information.\n\nTo determine access to Pro features, the App obtains purchase and entitlement information from StoreKit on the device, including product identifiers, purchase verification results, subscription expiration dates, and revocation status. This information is not transmitted to or stored on the Developer's servers. Apple's Privacy Policy applies to Apple's handling of information.",
+          },
+          {
+            title: '5. Analytics and Advertising',
             desc: 'Currently, this app does not incorporate any analytics tools to track user behavior or third-party advertising systems (SDKs). If we decide to introduce these in the future, we will update this policy and notify users in advance.',
           },
           {
-            title: '5. Disclaimer',
+            title: '6. Disclaimer',
             desc: "Data stored within this app is managed at the user's own risk. In the event of data loss due to a forgotten passcode, the activation of the Self-Destruct Timer, or the loss or malfunction of the device, the developer cannot restore or rescue the data by any means and assumes no responsibility whatsoever.",
           },
           {
-            title: '6. Contact Information',
+            title: '7. Contact Information',
             desc: "For any questions or inquiries regarding this policy, please contact us via the contact information provided in the app's settings screen.",
           },
         ],
-        date: 'Revised: May 9, 2026',
+        date: 'Revised: July 20, 2026',
       },
       cta: {
         title: 'Lock your secrets down today.',

@@ -28,9 +28,9 @@ const Terms = () => {
           <h1 className="text-3xl font-bold md:text-5xl">{t('terms.title')}</h1>
         </div>
         <p className="font-mono text-sm text-zinc-400">
-          LAST UPDATED: 2026.04.26
+          LAST UPDATED: 2026.07.20
           <br />
-          DOCUMENT ID: LB-TOS-001
+          DOCUMENT ID: LB-TOS-002
         </p>
       </div>
 
@@ -99,9 +99,6 @@ const Terms = () => {
           {/* 第6条 */}
           <section>
             <h2 className="mb-6 text-2xl font-bold">{t('terms.art6.title')}</h2>
-            <p className="mb-4 leading-relaxed text-zinc-300">
-              {t('terms.art6.desc')}
-            </p>
             <ol className="list-decimal space-y-2 pl-6 leading-relaxed text-zinc-300">
               {t('terms.art6.list', { returnObjects: true }).map(
                 (item, index) => (
@@ -117,13 +114,28 @@ const Terms = () => {
             <p className="leading-relaxed text-zinc-300">
               {t('terms.art7.desc')}
             </p>
+            <ol className="mt-4 list-decimal space-y-2 pl-6 leading-relaxed text-zinc-300">
+              {t('terms.art7.list', { returnObjects: true }).map(
+                (item, index) => (
+                  <li key={index}>{item}</li>
+                ),
+              )}
+            </ol>
           </section>
 
           {/* 第8条 */}
           <section>
             <h2 className="mb-6 text-2xl font-bold">{t('terms.art8.title')}</h2>
+            <p className="leading-relaxed text-zinc-300">
+              {t('terms.art8.desc')}
+            </p>
+          </section>
+
+          {/* 第9条 */}
+          <section>
+            <h2 className="mb-6 text-2xl font-bold">{t('terms.art9.title')}</h2>
             <ol className="list-decimal space-y-2 pl-6 leading-relaxed text-zinc-300">
-              {t('terms.art8.list', { returnObjects: true }).map(
+              {t('terms.art9.list', { returnObjects: true }).map(
                 (item, index) => (
                   <li key={index}>{item}</li>
                 ),
