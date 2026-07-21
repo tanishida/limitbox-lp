@@ -34,7 +34,7 @@ const Privacy = () => {
           </h1>
         </div>
         <p className="font-mono text-sm text-zinc-400">
-          LAST UPDATED: 2026.05.09
+          LAST UPDATED: 2026.07.20
           <br />
           DOCUMENT ID: {t('privacy.docId')}
         </p>
